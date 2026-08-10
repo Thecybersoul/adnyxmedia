@@ -1,5 +1,4 @@
 import { Hero } from "@/components/home/hero";
-import { Stats } from "@/components/home/stats";
 import { ServicesOverview } from "@/components/home/services-overview";
 import { FeaturedLocations } from "@/components/home/featured-locations";
 import { Process } from "@/components/home/process";
@@ -11,7 +10,6 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Stats />
       <ClientsMarquee />
       <ServicesOverview />
       <FeaturedLocations />
