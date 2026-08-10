@@ -1,9 +1,5 @@
 <svg width="400" height="110" viewBox="0 0 400 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- ADNYX text -->
-  <text x="10" y="55" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white">ADNYX</text>
-  <text x="10" y="85" font-family="Arial, sans-serif" font-size="16" font-weight="normal" fill="white" opacity="0.8">YOUR AD-VANTAGE</text>
-  
-  <!-- Red triangle icon -->
-  <path d="M 340 20 L 380 80 L 320 80 Z" fill="#C13C3C"/>
-  <line x1="350" y1="20" x2="350" y2="80" stroke="#000" stroke-width="3"/>
+  <!-- ADNYX Text -->
+  <text x="10" y="70" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="bold" fill="white" letter-spacing="-1">ADNYX</text>
+  <text x="10" y="95" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="500" fill="#C13C3C" letter-spacing="2">YOUR AD-VANTAGE</text>
 </svg>
