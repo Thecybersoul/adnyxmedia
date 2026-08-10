@@ -36,7 +36,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto mt-8 max-w-4xl text-center font-display text-5xl font-medium leading-[1.05] tracking-tight text-mist sm:text-6xl lg:text-7xl"
+          className="mx-auto mt-8 max-w-4xl text-center font-display text-4xl font-medium leading-[1.05] tracking-tight text-mist sm:text-5xl md:text-6xl lg:text-7xl"
         >
           The city is your
           <br />
@@ -47,7 +47,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto mt-6 max-w-xl text-center text-lg leading-relaxed text-mist-dim"
+          className="mx-auto mt-6 max-w-xl text-center text-base leading-relaxed text-mist-dim sm:text-lg px-4"
         >
           ADNYX owns and operates Bangalore&apos;s premium digital billboard
           network — turning the city&apos;s busiest junctions into stages for
@@ -58,12 +58,12 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.34, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          className="mt-10 flex flex-col items-center justify-center gap-3 px-4 sm:flex-row sm:gap-4"
         >
-          <Button href="/locations" size="lg">
+          <Button href="/locations" size="lg" className="w-full sm:w-auto">
             Explore live inventory
           </Button>
-          <Button href="/contact" size="lg" variant="secondary" showArrow={false}>
+          <Button href="/contact" size="lg" variant="secondary" showArrow={false} className="w-full sm:w-auto">
             Talk to our team
           </Button>
         </motion.div>
