@@ -28,16 +28,16 @@ export const company: CompanyContent = {
 };
 
 export const heroDefault: HeroContent = {
-  badge: "60+ live sites across Bangalore",
-  headline: "The city is your",
-  headlineAccent: "canvas after dark.",
+  badge: "5 live sites across Bangalore",
+  headline: "Your brand,",
+  headlineAccent: "impossible to miss.",
   subheadline:
-    "ADNYX owns and operates Bangalore's premium digital billboard network — turning the city's busiest junctions into stages for the brands who show up on them.",
+    "ADNYX owns and operates a premium billboard network at Bangalore's busiest junctions — turning the city's traffic into stages for the brands who show up on them.",
   primaryCtaLabel: "Explore live inventory",
   primaryCtaHref: "/locations",
   secondaryCtaLabel: "Talk to our team",
   secondaryCtaHref: "/contact",
-  mediaCaption: "MG Road Junction · Live now",
+  mediaCaption: "",
 };
 
 export const navLinks = [

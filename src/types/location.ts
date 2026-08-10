@@ -20,12 +20,14 @@ export interface InventoryLocation {
   heightFt: number;
   resolution?: string;
   illuminated: boolean;
-  dailyImpressions: number;
+  dailyImpressions?: number;
   landmark: string;
+  gps?: string;
   availability: Availability;
   highlights: string[];
   hue: [string, string];
   position: { x: number; y: number };
+  hasNightImage?: boolean;
   imageUrl?: string;
   videoUrl?: string;
 }

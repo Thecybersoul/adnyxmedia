@@ -7,14 +7,13 @@ import { ClientsMarquee } from "@/components/home/clients-marquee";
 import { Testimonials } from "@/components/home/testimonials";
 import { CtaSection } from "@/components/home/cta-section";
 import { getContentSection } from "@/lib/db/content";
-import { getLocations } from "@/lib/db/locations";
 
 export default async function Home() {
-  const [hero, locations] = await Promise.all([getContentSection("hero"), getLocations()]);
+  const hero = await getContentSection("hero");
 
   return (
     <>
-      <Hero hero={hero} locations={locations} />
+      <Hero hero={hero} />
       <Stats />
       <ClientsMarquee />
       <ServicesOverview />

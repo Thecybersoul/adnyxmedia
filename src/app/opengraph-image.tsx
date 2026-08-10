@@ -24,7 +24,7 @@ export default async function OpengraphImage() {
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <svg width={56} height={56} viewBox="0 0 744 744" style={{ display: "flex" }}>
             <path
-              fill="#C22222"
+              fill="#C13C3C"
               d="M335 611l176 0 138 0 -6 -154 -118 -79 -190 233zm300 -370l-79 98 85 56 -6 -154zm-551 357l-10 13 104 0 104 0 208 -256 -136 -91 -127 158 -143 176zm549 -419l37 -46 -263 66 -21 26 136 91 111 -137z"
             />
           </svg>
@@ -44,10 +44,10 @@ export default async function OpengraphImage() {
             lineHeight: 1.1,
           }}
         >
-          The city is your canvas after dark.
+          Your brand, impossible to miss.
         </div>
         <div style={{ display: "flex", marginTop: 28, fontSize: 28, color: "#a3a1b5" }}>
-          Premium digital billboards across Bangalore
+          Premium billboards across Bangalore
         </div>
       </div>
     ),

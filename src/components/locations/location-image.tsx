@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Radio } from "lucide-react";
+import { Radio, Sun, Moon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface LocationImageProps {
   slug: string;
@@ -11,6 +12,7 @@ interface LocationImageProps {
   hue: [string, string];
   imageUrl?: string;
   videoUrl?: string;
+  hasNightImage?: boolean;
   priority?: boolean;
   className?: string;
 }
@@ -22,11 +24,13 @@ export function LocationImage({
   hue,
   imageUrl,
   videoUrl,
+  hasNightImage = false,
   priority = false,
   className = "",
 }: LocationImageProps) {
   const [imageError, setImageError] = useState(false);
-  const imagePath = `/images/locations/${slug}.jpg`;
+  const [showNight, setShowNight] = useState(false);
+  const imagePath = `/images/locations/${slug}${showNight ? "-night" : ""}.jpg`;
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
@@ -46,8 +50,9 @@ export function LocationImage({
         <img src={imageUrl} alt={`${name} - ${area}`} className="absolute inset-0 size-full object-cover" />
       ) : !imageError ? (
         <Image
+          key={imagePath}
           src={imagePath}
-          alt={`${name} - ${area}`}
+          alt={`${name} - ${area}${showNight ? ", night view" : ", day view"}`}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 800px"
           className="object-cover"
@@ -66,6 +71,35 @@ export function LocationImage({
           <div className="absolute inset-0 flex items-center justify-center">
             <Radio className="size-10 text-ink/60" />
           </div>
+        </div>
+      )}
+
+      {hasNightImage && !imageUrl && !videoUrl && !imageError && (
+        <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full border border-white/10 bg-ink/70 p-1 backdrop-blur">
+          <button
+            type="button"
+            onClick={() => setShowNight(false)}
+            aria-pressed={!showNight}
+            aria-label="Day view"
+            className={cn(
+              "flex size-8 items-center justify-center rounded-full transition-colors",
+              !showNight ? "bg-brand text-white" : "text-mist-dim hover:text-mist"
+            )}
+          >
+            <Sun className="size-4" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowNight(true)}
+            aria-pressed={showNight}
+            aria-label="Night view"
+            className={cn(
+              "flex size-8 items-center justify-center rounded-full transition-colors",
+              showNight ? "bg-brand text-white" : "text-mist-dim hover:text-mist"
+            )}
+          >
+            <Moon className="size-4" />
+          </button>
         </div>
       )}
     </div>

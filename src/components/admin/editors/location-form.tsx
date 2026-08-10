@@ -140,8 +140,8 @@ export function LocationForm({ existing }: { existing?: InventoryLocation }) {
           <NumberField label="Width (ft)" value={value.widthFt} onChange={(v) => set("widthFt", v)} />
           <NumberField label="Height (ft)" value={value.heightFt} onChange={(v) => set("heightFt", v)} />
           <NumberField
-            label="Daily impressions"
-            value={value.dailyImpressions}
+            label="Daily impressions (optional)"
+            value={value.dailyImpressions ?? 0}
             onChange={(v) => set("dailyImpressions", v)}
           />
         </div>

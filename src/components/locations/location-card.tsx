@@ -70,10 +70,12 @@ export function LocationCard({ location }: { location: InventoryLocation }) {
             <Ratio className="size-3.5" />
             {location.widthFt}×{location.heightFt} ft
           </span>
-          <span className="inline-flex items-center gap-1">
-            <Eye className="size-3.5" />
-            {formatImpressions(location.dailyImpressions)}/day
-          </span>
+          {location.dailyImpressions && (
+            <span className="inline-flex items-center gap-1">
+              <Eye className="size-3.5" />
+              {formatImpressions(location.dailyImpressions)}/day
+            </span>
+          )}
         </div>
       </div>
 

@@ -23,9 +23,6 @@ export async function Footer() {
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Logo />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-mist-dim">
-              {company.description}
-            </p>
             <div className="mt-6 flex items-center gap-3">
               <SocialIcon href={company.social.instagram} label="Instagram">
                 <InstagramIcon className="size-4" />

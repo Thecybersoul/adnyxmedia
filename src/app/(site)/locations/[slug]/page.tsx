@@ -28,9 +28,7 @@ export async function generateMetadata({
   if (!location) return {};
   return {
     title: `${location.name} — ${location.area}`,
-    description: `${location.type} at ${location.name}, ${location.area}. ${location.widthFt}×${location.heightFt} ft, ~${Math.round(
-      location.dailyImpressions / 1000
-    )}K daily impressions.`,
+    description: `${location.type} at ${location.name}, ${location.area}. ${location.widthFt}×${location.heightFt} ft.`,
   };
 }
 
@@ -93,6 +91,7 @@ export default async function LocationDetailPage({
                   hue={location.hue}
                   imageUrl={location.imageUrl}
                   videoUrl={location.videoUrl}
+                  hasNightImage={location.hasNightImage}
                   priority={true}
                   className="mt-8 aspect-[16/9] rounded-2xl border border-white/10"
                 />
@@ -124,8 +123,11 @@ export default async function LocationDetailPage({
                     <Spec icon={Radio} label="Resolution" value={location.resolution} />
                   )}
                   <Spec icon={Signpost} label="Format" value={location.format} />
-                  <Spec icon={Eye} label="Daily impressions" value={`~${formatImpressions(location.dailyImpressions)}`} />
+                  {location.dailyImpressions && (
+                    <Spec icon={Eye} label="Daily impressions" value={`~${formatImpressions(location.dailyImpressions)}`} />
+                  )}
                   <Spec icon={Sun} label="Illumination" value={location.illuminated ? "Illuminated, 24×7" : "Non-illuminated"} />
+                  {location.gps && <Spec icon={MapPin} label="GPS" value={location.gps} />}
                 </dl>
 
                 <div className="mt-8 space-y-3">
