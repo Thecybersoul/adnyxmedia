@@ -22,15 +22,12 @@ export default async function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: 16,
-              display: "flex",
-              backgroundImage: "linear-gradient(135deg, #7c5cff, #2ee6d6 55%, #ff4fd8)",
-            }}
-          />
+          <svg width={56} height={56} viewBox="0 0 744 744" style={{ display: "flex" }}>
+            <path
+              fill="#ffffff"
+              d="M335 611l176 0 138 0 -6 -154 -118 -79 -190 233zm300 -370l-79 98 85 56 -6 -154zm-551 357l-10 13 104 0 104 0 208 -256 -136 -91 -127 158 -143 176zm549 -419l37 -46 -263 66 -21 26 136 91 111 -137z"
+            />
+          </svg>
           <span style={{ fontSize: 34, color: "#f3f2f9", fontWeight: 700, letterSpacing: -1 }}>
             {company.name}
           </span>
