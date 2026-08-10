@@ -1,17 +1,18 @@
 export const company = {
   name: "ADNYX",
-  legalName: "Adnyx Media",
-  tagline: "The city is your canvas.",
+  legalName: "ADNYX MEDIA LLP",
+  tagline: "Your Ad-vantage",
   description:
-    "ADNYX owns and operates a premium network of digital billboards and hoardings across Bangalore — turning the city's busiest junctions into stages for the brands who advertise on them.",
+    "ADNYX is a digital advertising agency focused on outdoor solutions. Our extensive network of premium digital billboards ensures outstanding outdoor advertising services across Bangalore.",
   city: "Bangalore, India",
-  email: "hello@adnyx.in",
-  phone: "+91 80000 00000",
-  address: "ADNYX Media, Domlur, Bangalore, Karnataka 560071",
+  email: "sales@adnyx.in",
+  phone: "+91 99199 19729",
+  whatsapp: "+91 9919919728",
+  address: "77/1, 4th Floor, CJR Complex, Outer Ring Road, Bellandur, Bengaluru - 560103",
   social: {
     instagram: "https://instagram.com/adnyx.in",
     linkedin: "https://linkedin.com/company/adnyx",
-    twitter: "https://twitter.com/adnyxmedia",
+    facebook: "https://facebook.com/adnyx",
   },
 };
 
