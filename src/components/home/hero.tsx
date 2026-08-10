@@ -84,28 +84,6 @@ export function Hero() {
 function BillboardShowcase({ sites }: { sites: typeof locations }) {
   return (
     <div className="relative mx-auto max-w-5xl">
-      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-surface/60 p-1.5 shadow-[0_0_120px_-20px_rgba(124,92,255,0.35)] backdrop-blur">
-        <div className="relative overflow-hidden rounded-[1.3rem] bg-ink">
-          <div className="relative aspect-[16/8] overflow-hidden">
-            <div className="absolute inset-0 bg-[linear-gradient(115deg,#7c5cff_0%,#2ee6d6_45%,#ff4fd8_100%)] opacity-90" />
-            <div className="absolute inset-0 [background-image:linear-gradient(rgba(0,0,0,0.15)_1px,transparent_1px)] [background-size:100%_4px] mix-blend-overlay" />
-            <motion.div
-              aria-hidden
-              className="absolute inset-x-0 h-1/3 bg-gradient-to-b from-white/40 to-transparent"
-              animate={{ y: ["-40%", "340%"] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-            />
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-8 text-center">
-              <Radio className="size-6 text-ink/70" />
-              <p className="font-display text-2xl font-semibold text-ink sm:text-4xl">
-                YOUR BRAND, EVERY SIGNAL.
-              </p>
-              <p className="text-sm text-ink/70">MG Road Junction · Live now</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
         {sites.map((site, i) => (
           <motion.span
