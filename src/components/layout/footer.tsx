@@ -28,8 +28,8 @@ export function Footer() {
               <SocialIcon href={company.social.linkedin} label="LinkedIn">
                 <LinkedInIcon className="size-4" />
               </SocialIcon>
-              <SocialIcon href={company.social.twitter} label="X (Twitter)">
-                <XIcon className="size-4" />
+              <SocialIcon href={company.social.facebook} label="Facebook">
+                <FacebookIcon className="size-4" />
               </SocialIcon>
             </div>
           </div>
