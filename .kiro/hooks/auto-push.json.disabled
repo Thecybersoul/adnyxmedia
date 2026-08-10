@@ -1,4 +1,5 @@
 {
+  "_disabled": "Renamed to .disabled on 2026-08-10 to stop auto-pushing straight to main on every file save — it was racing with other concurrent work on this branch. Rename back to auto-push.json to re-enable.",
   "version": "v1",
   "hooks": [
     {
