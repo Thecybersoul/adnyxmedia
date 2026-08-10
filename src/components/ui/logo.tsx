@@ -10,7 +10,7 @@ export function Logo({ className, variant = "full" }: { className?: string; vari
           alt="ADNYX"
           width={36}
           height={36}
-          className="object-contain"
+          className="object-contain w-8 h-8 sm:w-9 sm:h-9"
           priority
         />
       </div>
@@ -24,7 +24,7 @@ export function Logo({ className, variant = "full" }: { className?: string; vari
         alt="ADNYX - Your Ad-vantage"
         width={160}
         height={44}
-        className="object-contain"
+        className="object-contain h-10 w-auto sm:h-11"
         priority
       />
     </div>
