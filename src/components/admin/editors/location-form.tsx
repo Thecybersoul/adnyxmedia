@@ -29,7 +29,7 @@ const emptyLocation: LocationInput = {
   landmark: "",
   availability: "Available",
   highlights: [],
-  hue: ["#FF5A5A", "#7A0E13"],
+  hue: ["#E65050", "#7A2020"],
   position: { x: 50, y: 50 },
 };
 
@@ -151,7 +151,7 @@ export function LocationForm({ existing }: { existing?: InventoryLocation }) {
             type="checkbox"
             checked={value.illuminated}
             onChange={(e) => set("illuminated", e.target.checked)}
-            className="size-4 rounded border-white/20 bg-ink accent-[#e4262a]"
+            className="size-4 rounded border-white/20 bg-ink accent-[#c13c3c]"
           />
           Illuminated (24×7 visible)
         </label>

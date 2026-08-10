@@ -43,7 +43,7 @@ export function Hero({
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto mt-8 max-w-4xl text-center font-display text-5xl font-medium leading-[1.05] tracking-tight text-mist sm:text-6xl lg:text-7xl"
+          className="mx-auto mt-8 max-w-4xl text-center font-display text-4xl font-medium leading-[1.05] tracking-tight text-mist sm:text-5xl md:text-6xl lg:text-7xl"
         >
           {hero.headline}
           <br />
@@ -54,7 +54,7 @@ export function Hero({
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto mt-6 max-w-xl text-center text-lg leading-relaxed text-mist-dim"
+          className="mx-auto mt-6 max-w-xl text-center text-base leading-relaxed text-mist-dim sm:text-lg px-4"
         >
           {hero.subheadline}
         </motion.p>
@@ -63,12 +63,18 @@ export function Hero({
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.34, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          className="mt-10 flex flex-col items-center justify-center gap-3 px-4 sm:flex-row sm:gap-4"
         >
-          <Button href={hero.primaryCtaHref} size="lg">
+          <Button href={hero.primaryCtaHref} size="lg" className="w-full sm:w-auto">
             {hero.primaryCtaLabel}
           </Button>
-          <Button href={hero.secondaryCtaHref} size="lg" variant="secondary" showArrow={false}>
+          <Button
+            href={hero.secondaryCtaHref}
+            size="lg"
+            variant="secondary"
+            showArrow={false}
+            className="w-full sm:w-auto"
+          >
             {hero.secondaryCtaLabel}
           </Button>
         </motion.div>
@@ -95,7 +101,7 @@ function BillboardShowcase({
 }) {
   return (
     <div className="relative mx-auto max-w-5xl">
-      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-surface/60 p-1.5 shadow-[0_0_120px_-20px_rgba(228,38,42,0.35)] backdrop-blur">
+      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-surface/60 p-1.5 shadow-[0_0_120px_-20px_rgba(193,60,60,0.35)] backdrop-blur">
         <div className="relative overflow-hidden rounded-[1.3rem] bg-ink">
           <div className="relative aspect-[16/8] overflow-hidden">
             {hero.mediaUrl && hero.mediaType === "video" ? (
@@ -116,7 +122,7 @@ function BillboardShowcase({
               />
             ) : (
               <>
-                <div className="absolute inset-0 bg-[linear-gradient(115deg,#FF5A5A_0%,#E4262A_45%,#7A0E13_100%)] opacity-90" />
+                <div className="absolute inset-0 bg-[linear-gradient(115deg,#E65050_0%,#C13C3C_45%,#7A2020_100%)] opacity-90" />
                 <div className="absolute inset-0 [background-image:linear-gradient(rgba(0,0,0,0.15)_1px,transparent_1px)] [background-size:100%_4px] mix-blend-overlay" />
                 <motion.div
                   aria-hidden

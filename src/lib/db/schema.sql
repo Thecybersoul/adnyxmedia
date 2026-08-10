@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS locations (
   landmark TEXT NOT NULL DEFAULT '',
   availability TEXT NOT NULL DEFAULT 'Available',
   highlights JSONB NOT NULL DEFAULT '[]',
-  hue JSONB NOT NULL DEFAULT '["#FF5A5A", "#7A0E13"]',
+  hue JSONB NOT NULL DEFAULT '["#E65050", "#7A2020"]',
   position JSONB NOT NULL DEFAULT '{"x": 50, "y": 50}',
   image_url TEXT,
   video_url TEXT,

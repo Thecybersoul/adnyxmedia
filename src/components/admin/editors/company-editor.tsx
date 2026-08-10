@@ -53,6 +53,11 @@ export function CompanyEditor({ initial }: { initial: CompanyContent }) {
           <Field label="City" value={value.city} onChange={(v) => set("city", v)} />
           <Field label="Email" value={value.email} onChange={(v) => set("email", v)} type="email" />
           <Field label="Phone" value={value.phone} onChange={(v) => set("phone", v)} />
+          <Field
+            label="WhatsApp"
+            value={value.whatsapp ?? ""}
+            onChange={(v) => set("whatsapp", v)}
+          />
           <Field label="Address" value={value.address} onChange={(v) => set("address", v)} />
         </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
@@ -67,9 +72,9 @@ export function CompanyEditor({ initial }: { initial: CompanyContent }) {
             onChange={(v) => setSocial("linkedin", v)}
           />
           <Field
-            label="X / Twitter URL"
-            value={value.social.twitter}
-            onChange={(v) => setSocial("twitter", v)}
+            label="Facebook URL"
+            value={value.social.facebook ?? ""}
+            onChange={(v) => setSocial("facebook", v)}
           />
         </div>
       </div>

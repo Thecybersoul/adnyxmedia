@@ -1,0 +1,6 @@
+<svg width="400" height="110" viewBox="0 0 400 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main ADNYX text with better styling -->
+  <text x="10" y="65" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, Helvetica, sans-serif" font-size="52" font-weight="700" fill="white" letter-spacing="-2">ADNYX</text>
+  <!-- Tagline with better spacing and color -->
+  <text x="10" y="92" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#C13C3C" letter-spacing="3.5">YOUR AD-VANTAGE</text>
+</svg>

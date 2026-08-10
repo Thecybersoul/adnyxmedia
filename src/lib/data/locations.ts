@@ -22,7 +22,7 @@ export const locations: InventoryLocation[] = [
     landmark: "Opposite Trinity Metro Station",
     availability: "Available",
     highlights: ["Prime CBD visibility", "Peak-hour dwell time", "4-side traffic convergence"],
-    hue: ["#FF5A5A", "#7A0E13"],
+    hue: ["#C13C3C", "#8B2828"],
     position: { x: 50, y: 48 },
   },
   {
@@ -41,7 +41,7 @@ export const locations: InventoryLocation[] = [
     landmark: "Near CMH Road Signal",
     availability: "Available",
     highlights: ["Premium retail catchment", "Young urban audience", "Night footfall surge"],
-    hue: ["#E4262A", "#2E0A0C"],
+    hue: ["#E65050", "#C13C3C"],
     position: { x: 62, y: 45 },
   },
   {
@@ -60,7 +60,7 @@ export const locations: InventoryLocation[] = [
     landmark: "ITPL Main Gate Flyover",
     availability: "Booked",
     highlights: ["IT-corridor commuter reach", "Tech workforce affluence", "Long dwell in traffic"],
-    hue: ["#FF8A65", "#C81E3A"],
+    hue: ["#9E2F2F", "#6B1F1F"],
     position: { x: 85, y: 35 },
   },
   {
@@ -78,7 +78,7 @@ export const locations: InventoryLocation[] = [
     landmark: "Airport Road Approach",
     availability: "Available",
     highlights: ["Airport-bound traffic", "Highest daily reach in network", "24×7 visibility"],
-    hue: ["#FF3B3B", "#4A0E12"],
+    hue: ["#C13C3C", "#E65050"],
     position: { x: 35, y: 15 },
   },
   {
@@ -97,7 +97,7 @@ export const locations: InventoryLocation[] = [
     landmark: "Sony World Signal Junction",
     availability: "Available",
     highlights: ["Startup & F&B hotspot", "High social recall zone", "Dense evening traffic"],
-    hue: ["#F2545B", "#7A0E13"],
+    hue: ["#8B2828", "#C13C3C"],
     position: { x: 58, y: 62 },
   },
   {
@@ -116,7 +116,7 @@ export const locations: InventoryLocation[] = [
     landmark: "Silk Board Elevated Corridor",
     availability: "Available",
     highlights: ["Bangalore's busiest junction", "Multi-directional exposure", "Extended peak-hour crawl"],
-    hue: ["#FF6F61", "#8C1116"],
+    hue: ["#E65050", "#9E2F2F"],
     position: { x: 52, y: 72 },
   },
   {
@@ -135,7 +135,7 @@ export const locations: InventoryLocation[] = [
     landmark: "Outer Ring Road Junction",
     availability: "Coming Soon",
     highlights: ["ORR tech-park spillover", "Cross-city commuter route"],
-    hue: ["#E4262A", "#FF8A65"],
+    hue: ["#C13C3C", "#8B2828"],
     position: { x: 78, y: 42 },
   },
   {
@@ -154,7 +154,7 @@ export const locations: InventoryLocation[] = [
     landmark: "Toll Plaza Approach",
     availability: "Available",
     highlights: ["IT/ITES workforce corridor", "Consistent 2-shift traffic"],
-    hue: ["#C81E3A", "#2E0A0C"],
+    hue: ["#9E2F2F", "#C13C3C"],
     position: { x: 50, y: 92 },
   },
   {
@@ -172,7 +172,7 @@ export const locations: InventoryLocation[] = [
     landmark: "27th Main Road",
     availability: "Available",
     highlights: ["Premium residential catchment", "Cafe & retail-dense stretch"],
-    hue: ["#FF5A5A", "#8C1116"],
+    hue: ["#6B1F1F", "#8B2828"],
     position: { x: 68, y: 68 },
   },
   {
@@ -191,7 +191,7 @@ export const locations: InventoryLocation[] = [
     landmark: "Ecospace Business Park",
     availability: "Available",
     highlights: ["Dense tech-park cluster", "High household income index"],
-    hue: ["#FF8A80", "#7A0E13"],
+    hue: ["#E65050", "#C13C3C"],
     position: { x: 72, y: 58 },
   },
   {
@@ -209,7 +209,7 @@ export const locations: InventoryLocation[] = [
     landmark: "South End Circle",
     availability: "Available",
     highlights: ["Established South Bangalore market", "High brand recall locality"],
-    hue: ["#E4262A", "#FF3B3B"],
+    hue: ["#8B2828", "#9E2F2F"],
     position: { x: 40, y: 65 },
   },
   {
@@ -227,7 +227,7 @@ export const locations: InventoryLocation[] = [
     landmark: "Old Madras Road Junction",
     availability: "Booked",
     highlights: ["East Bangalore gateway", "Rail + road dual exposure"],
-    hue: ["#8C1116", "#FF6F61"],
+    hue: ["#C13C3C", "#E65050"],
     position: { x: 70, y: 30 },
   },
   {
@@ -246,7 +246,7 @@ export const locations: InventoryLocation[] = [
     landmark: "Yeshwanthpur Metro Station",
     availability: "Available",
     highlights: ["Metro + rail interchange", "Wholesale market catchment"],
-    hue: ["#F2545B", "#2E0A0C"],
+    hue: ["#9E2F2F", "#6B1F1F"],
     position: { x: 22, y: 22 },
   },
   {
@@ -264,7 +264,7 @@ export const locations: InventoryLocation[] = [
     landmark: "IIM-B Approach Road",
     availability: "Available",
     highlights: ["Mixed residential-commercial belt", "Steady weekend traffic"],
-    hue: ["#FF5A5A", "#C81E3A"],
+    hue: ["#E65050", "#8B2828"],
     position: { x: 45, y: 80 },
   },
 ];

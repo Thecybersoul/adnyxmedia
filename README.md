@@ -9,6 +9,7 @@ A modern, animated marketing site for **ADNYX**, a digital billboard media owner
 - **Framer Motion** — scroll reveals, counters, page transitions
 - **Neon Postgres** (`@neondatabase/serverless`) — stores editable content, so the site's public pages render dynamically
 - **Vercel Blob** (`@vercel/blob`) — image/video storage for the media library
+- **Resend + Zod** — the `/contact` form posts to `src/app/api/contact/route.ts`, which validates input and emails the enquiry (rate-limited); without `RESEND_API_KEY` set it still accepts submissions, just without sending mail
 - **lucide-react** — icon set
 
 The public site has a **built-in fallback**: with no database connected, every page renders the same content it always did (from `src/lib/data/`), so the site works immediately with zero setup. Connecting a database unlocks the `/admin` dashboard for live editing.
@@ -66,7 +67,12 @@ scripts/
 
 ## ⚠️ Content still needs a final pass
 
-This site was built without access to the live adnyx.in content (blocked in the sandbox this was built in), so `src/lib/data/site.ts` and `src/lib/data/locations.ts` currently hold **illustrative placeholder data** (company contact details, the 14 sample billboard sites, testimonials, client names). Once a database is connected, edit everything from `/admin` rather than the source files. The logo mark is also a close geometric approximation of the uploaded logo — swap in the real asset (as an SVG in `src/components/ui/logo.tsx`, or an uploaded file via the media library) when available.
+The logo and core company details (address, phone, WhatsApp, real client names) are now the real thing. What's still placeholder:
+
+1. **`src/lib/data/locations.ts`** — the 14 sample billboard sites (names, dimensions, resolution, daily impressions, map position) are illustrative. Replace with ADNYX's real inventory — either edit the file directly, or (once a database is connected) manage the whole inventory from `/admin/locations`.
+2. **Billboard photos** — two ways to add them: drop files into `public/images/locations/<slug>.jpg` (see **[IMAGES.md](./IMAGES.md)** for naming/sizing), or upload per-site photos/videos from `/admin` (stored in Vercel Blob) — the admin upload takes priority when both are present.
+3. Testimonials, timeline, and services copy are still illustrative — edit from `/admin/content/*` once a database is connected, or directly in `src/lib/data/site.ts`.
+4. Consider adding a real Google Business/Maps embed on the Contact page.
 
 ## Deploying to Vercel (free tier)
 
@@ -74,4 +80,5 @@ This site was built without access to the live adnyx.in content (blocked in the 
 2. Go to [vercel.com/new](https://vercel.com/new) and import the repo — Next.js is auto-detected.
 3. In the Vercel dashboard, attach a Postgres (Neon) database and a Blob store (Storage tab), and set `ADMIN_PASSWORD` / `ADMIN_SESSION_SECRET` under Environment Variables.
 4. Deploy, then run `npm run db:migrate && npm run db:seed` locally with the deployed `DATABASE_URL` (via `vercel env pull`) to initialize the database.
-5. Point your domain (`adnyx.in`) at the deployment via the Domains tab.
+5. Optionally set `RESEND_API_KEY` (from [resend.com](https://resend.com)), `RESEND_FROM_EMAIL`, and `CONTACT_EMAIL` to have the contact form send real emails.
+6. Point your domain (`adnyx.in`) at the deployment via the Domains tab.

@@ -1,14 +1,32 @@
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
-export function Logo({ className }: { className?: string }) {
+export function Logo({ className, variant = "full" }: { className?: string; variant?: "full" | "icon" }) {
+  if (variant === "icon") {
+    return (
+      <div className={cn("relative shrink-0", className)}>
+        <Image
+          src="/images/adnyx-icon-red.svg"
+          alt="ADNYX"
+          width={36}
+          height={36}
+          className="object-contain w-8 h-8 sm:w-9 sm:h-9"
+          priority
+        />
+      </div>
+    );
+  }
+
   return (
-    <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <svg width="26" height="26" viewBox="0 0 32 32" fill="none" className="shrink-0">
-        <path d="M17 3 L30 29 L21.5 29 L17 18.5 L11.5 29 L3 29 Z" fill="#E4262A" />
-      </svg>
-      <span className="font-display text-lg font-semibold tracking-tight text-mist">
-        ADNYX
-      </span>
-    </span>
+    <div className={cn("relative", className)}>
+      <Image
+        src="/images/adnyx-logo-white.svg"
+        alt="ADNYX - Your Ad-vantage"
+        width={160}
+        height={44}
+        className="object-contain h-10 w-auto sm:h-11"
+        priority
+      />
+    </div>
   );
 }

@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Eye, Ratio } from "lucide-react";
 import { InventoryLocation } from "@/types/location";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 
 function formatImpressions(n: number) {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
@@ -16,18 +20,33 @@ const availabilityTone = {
 } as const;
 
 export function LocationCard({ location }: { location: InventoryLocation }) {
+  const [imageError, setImageError] = useState(false);
+  const imagePath = `/images/locations/${location.slug}.jpg`;
+
   return (
     <Link
       href={`/locations/${location.slug}`}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface/60 transition-all duration-300 hover:-translate-y-1 hover:border-white/20"
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden bg-ink">
         {location.imageUrl ? (
+          // Admin-uploaded override (Vercel Blob URL) — plain <img> since it's an
+          // arbitrary remote host not covered by next/image's domain allowlist.
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={location.imageUrl}
             alt={location.name}
-            className="absolute inset-0 size-full object-cover"
+            className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : !imageError ? (
+          <Image
+            src={imagePath}
+            alt={`${location.name} - ${location.area}`}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            onError={() => setImageError(true)}
+            priority={false}
           />
         ) : (
           <div

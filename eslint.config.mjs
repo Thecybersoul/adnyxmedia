@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Standalone CommonJS dev utility script, not part of the app bundle.
+    "scripts/generate-placeholder-images.js",
   ]),
 ]);
 

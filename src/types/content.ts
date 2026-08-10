@@ -6,11 +6,13 @@ export interface CompanyContent {
   city: string;
   email: string;
   phone: string;
+  whatsapp?: string;
   address: string;
   social: {
     instagram: string;
     linkedin: string;
-    twitter: string;
+    facebook?: string;
+    twitter?: string;
   };
 }
 

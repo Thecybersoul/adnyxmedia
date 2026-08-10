@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/ui/logo";
-import { InstagramIcon, LinkedInIcon, XIcon } from "@/components/ui/social-icons";
+import { InstagramIcon, LinkedInIcon, FacebookIcon } from "@/components/ui/social-icons";
 import { navLinks } from "@/lib/data/site";
 import { getContentSection } from "@/lib/db/content";
 
@@ -33,9 +33,11 @@ export async function Footer() {
               <SocialIcon href={company.social.linkedin} label="LinkedIn">
                 <LinkedInIcon className="size-4" />
               </SocialIcon>
-              <SocialIcon href={company.social.twitter} label="X (Twitter)">
-                <XIcon className="size-4" />
-              </SocialIcon>
+              {company.social.facebook && (
+                <SocialIcon href={company.social.facebook} label="Facebook">
+                  <FacebookIcon className="size-4" />
+                </SocialIcon>
+              )}
             </div>
           </div>
 

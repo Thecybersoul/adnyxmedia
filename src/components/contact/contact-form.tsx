@@ -1,44 +1,118 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2, AlertCircle } from "lucide-react";
 import { ButtonEl } from "@/components/ui/button";
 
 const budgetOptions = ["< ₹1L", "₹1L – ₹5L", "₹5L – ₹15L", "₹15L+"];
 
-export function ContactForm({ email }: { email: string }) {
-  const [status, setStatus] = useState<"idle" | "submitting" | "sent">("idle");
+type FormStatus = "idle" | "submitting" | "sent" | "error";
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+export function ContactForm({ email, phone }: { email: string; phone: string }) {
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    const data = new FormData(form);
+    const formData = new FormData(form);
+    
     setStatus("submitting");
+    setErrorMessage("");
 
-    const subject = encodeURIComponent(`New enquiry from ${data.get("name") || "website"}`);
-    const body = encodeURIComponent(
-      `Name: ${data.get("name")}\nCompany: ${data.get("company")}\nEmail: ${data.get("email")}\nPhone: ${data.get("phone")}\nBudget: ${data.get("budget")}\n\nMessage:\n${data.get("message")}`
-    );
+    // Prepare data for API
+    const data = {
+      name: formData.get("name") as string,
+      company: formData.get("company") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string || undefined,
+      budget: formData.get("budget") as string || undefined,
+      message: formData.get("message") as string,
+    };
 
-    window.setTimeout(() => {
-      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 429) {
+          setErrorMessage("Too many requests. Please try again in a few minutes.");
+        } else if (response.status === 400 && result.details) {
+          const errors = result.details.map((d: { message: string }) => d.message).join(", ");
+          setErrorMessage(errors);
+        } else {
+          setErrorMessage(result.error || "Something went wrong. Please try again.");
+        }
+        setStatus("error");
+        return;
+      }
+
+      setSuccessMessage(result.message || "Your enquiry has been sent successfully!");
       setStatus("sent");
-    }, 500);
+      form.reset();
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setErrorMessage("Network error. Please check your connection and try again.");
+      setStatus("error");
+    }
   }
 
   if (status === "sent") {
     return (
       <div className="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-surface/60 px-8 py-16 text-center">
-        <CheckCircle2 className="size-10 text-signal" />
-        <h3 className="mt-4 font-display text-xl font-medium text-mist">Almost there</h3>
+        <CheckCircle2 className="size-12 text-signal" />
+        <h3 className="mt-4 font-display text-xl font-medium text-mist">Message sent!</h3>
         <p className="mt-2 max-w-sm text-sm text-mist-dim">
-          Your email app should now be open with your message ready to send.
-          If it didn&apos;t open, email us directly at{" "}
-          <a href={`mailto:${email}`} className="text-brand-bright">
+          {successMessage || "We've received your enquiry and will get back to you within one business day."}
+        </p>
+        <button
+          onClick={() => setStatus("idle")}
+          className="mt-6 text-sm text-brand-bright hover:text-brand transition-colors"
+        >
+          Send another message
+        </button>
+      </div>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <div className="rounded-2xl border border-white/10 bg-surface/60 p-7 sm:p-9">
+        <div className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/10 p-4 mb-6">
+          <AlertCircle className="size-5 text-red-400 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-medium text-red-300">Failed to send message</p>
+            <p className="mt-1 text-sm text-red-200/80">{errorMessage}</p>
+          </div>
+        </div>
+        <p className="text-sm text-mist-dim mb-4">
+          You can also reach us directly at{" "}
+          <a href={`mailto:${email}`} className="text-brand-bright hover:text-brand transition-colors">
             {email}
+          </a>
+          {" "}or call{" "}
+          <a href={`tel:${phone}`} className="text-brand-bright hover:text-brand transition-colors">
+            {phone}
           </a>
           .
         </p>
+        <button
+          onClick={() => {
+            setStatus("idle");
+            setErrorMessage("");
+          }}
+          className="text-sm text-brand-bright hover:text-brand transition-colors"
+        >
+          Try again
+        </button>
       </div>
     );
   }
@@ -90,12 +164,16 @@ export function ContactForm({ email }: { email: string }) {
         {status === "submitting" ? (
           <>
             <Loader2 className="size-4 animate-spin" />
-            Preparing your message…
+            Sending…
           </>
         ) : (
           "Send enquiry"
         )}
       </ButtonEl>
+      
+      <p className="mt-4 text-xs text-mist-faint">
+        We typically respond within one business day. Your information is kept confidential.
+      </p>
     </form>
   );
 }
