@@ -4,7 +4,10 @@ import { z } from "zod";
 import { company } from "@/lib/data/site";
 
 // Initialize Resend with API key from environment variables
-const resend = new Resend(process.env.RESEND_API_KEY);
+// During build, use a placeholder if key is not set
+const resend = process.env.RESEND_API_KEY 
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 // Rate limiting map (in-memory, resets on server restart)
 // For production, consider using Redis or a proper rate limiting service
