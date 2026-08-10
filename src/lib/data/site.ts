@@ -157,8 +157,12 @@ export const testimonials = [
 ];
 
 export const clients = [
-  "Zylo", "Kavan Foods", "Nimbus Bank", "Uplink", "Fernweh Travel",
-  "Sundown Motors", "Loop Fintech", "Verve Retail", "Northstar Realty", "Pulse Wearables",
+  "Prestige Group",
+  "Courtyard by Sublime",
+  "Sublime",
+  "British Petroleum",
+  "Hoppr",
+  "and many more",
 ];
 
 export const values = [
