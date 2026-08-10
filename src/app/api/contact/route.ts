@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     const validatedData = contactFormSchema.parse(body);
 
     // If Resend is not configured, return fallback response
-    if (!process.env.RESEND_API_KEY) {
+    if (!resend || !process.env.RESEND_API_KEY) {
       console.warn("RESEND_API_KEY not configured - email not sent");
       return NextResponse.json(
         {
