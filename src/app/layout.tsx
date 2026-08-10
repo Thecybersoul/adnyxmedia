@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-import { OrganizationJsonLd } from "@/components/json-ld";
 import { company } from "@/lib/data/site";
 
 const spaceGrotesk = Space_Grotesk({
@@ -54,12 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-ink">
-        <OrganizationJsonLd />
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-      </body>
+      <body className="min-h-full flex flex-col bg-ink">{children}</body>
     </html>
   );
 }

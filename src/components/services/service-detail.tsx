@@ -5,27 +5,29 @@ import {
   Radar,
   Palette,
   ClipboardList,
+  Sparkles,
   Check,
 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { cn } from "@/lib/utils";
-import { services } from "@/lib/data/site";
+import { getContentSection } from "@/lib/db/content";
 
-const icons = {
+const icons: Record<string, typeof Monitor> = {
   "digital-billboards": Monitor,
   "static-hoardings": Landmark,
   "transit-gantry": Signpost,
   "programmatic-dooh": Radar,
   "creative-production": Palette,
   "campaign-management": ClipboardList,
-} as const;
+};
 
-export function ServiceDetails() {
+export async function ServiceDetails() {
+  const services = await getContentSection("services");
   return (
     <div className="divide-y divide-white/10 border-y border-white/10">
       {services.map((service, i) => {
-        const Icon = icons[service.id as keyof typeof icons];
+        const Icon = icons[service.id] ?? Sparkles;
         return (
           <section key={service.id} id={service.id} className="relative py-20 scroll-mt-24 lg:py-24">
             <Container>
@@ -36,7 +38,7 @@ export function ServiceDetails() {
                 )}
               >
                 <Reveal>
-                  <div className="flex size-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-violet-soft">
+                  <div className="flex size-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-brand-bright">
                     <Icon className="size-6" />
                   </div>
                   <h2 className="mt-6 font-display text-3xl font-medium tracking-tight text-mist sm:text-4xl">
@@ -51,7 +53,7 @@ export function ServiceDetails() {
                   <ul className="space-y-4 rounded-2xl border border-white/10 bg-surface/60 p-8">
                     {service.points.map((point) => (
                       <li key={point} className="flex items-start gap-3">
-                        <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-violet/20 text-violet-soft">
+                        <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand/20 text-brand-bright">
                           <Check className="size-3" />
                         </span>
                         <span className="text-sm leading-relaxed text-mist-dim">{point}</span>

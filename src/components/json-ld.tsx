@@ -1,6 +1,7 @@
-import { company } from "@/lib/data/site";
+import { getContentSection } from "@/lib/db/content";
 
-export function OrganizationJsonLd() {
+export async function OrganizationJsonLd() {
+  const company = await getContentSection("company");
   const data = {
     "@context": "https://schema.org",
     "@type": "AdvertisingAgency",

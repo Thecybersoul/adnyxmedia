@@ -6,11 +6,15 @@ import { Process } from "@/components/home/process";
 import { ClientsMarquee } from "@/components/home/clients-marquee";
 import { Testimonials } from "@/components/home/testimonials";
 import { CtaSection } from "@/components/home/cta-section";
+import { getContentSection } from "@/lib/db/content";
+import { getLocations } from "@/lib/db/locations";
 
-export default function Home() {
+export default async function Home() {
+  const [hero, locations] = await Promise.all([getContentSection("hero"), getLocations()]);
+
   return (
     <>
-      <Hero />
+      <Hero hero={hero} locations={locations} />
       <Stats />
       <ClientsMarquee />
       <ServicesOverview />

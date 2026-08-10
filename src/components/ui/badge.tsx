@@ -10,8 +10,8 @@ export function Badge({
   tone?: "default" | "success" | "warning" | "muted";
 }) {
   const toneClasses: Record<string, string> = {
-    default: "bg-violet/15 text-violet-soft border-violet/25",
-    success: "bg-cyan/15 text-cyan border-cyan/25",
+    default: "bg-brand/15 text-brand-bright border-brand/25",
+    success: "bg-signal/15 text-signal border-signal/25",
     warning: "bg-amber/15 text-amber border-amber/25",
     muted: "bg-white/5 text-mist-dim border-white/10",
   };

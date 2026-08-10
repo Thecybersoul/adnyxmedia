@@ -5,7 +5,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { NetworkMap } from "@/components/locations/network-map";
 import { LocationsExplorer } from "@/components/locations/locations-explorer";
 import { CtaSection } from "@/components/home/cta-section";
-import { locations } from "@/lib/data/locations";
+import { getLocations } from "@/lib/db/locations";
 
 export const metadata: Metadata = {
   title: "Locations & Inventory",
@@ -13,7 +13,8 @@ export const metadata: Metadata = {
     "Browse ADNYX's full digital billboard and hoarding inventory across Bangalore — filter by zone and format, and view specs, traffic and availability for every site.",
 };
 
-export default function LocationsPage() {
+export default async function LocationsPage() {
+  const locations = await getLocations();
   return (
     <>
       <PageHeader

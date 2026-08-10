@@ -1,9 +1,10 @@
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
-import { timeline } from "@/lib/data/site";
+import { getContentSection } from "@/lib/db/content";
 
-export function Timeline() {
+export async function Timeline() {
+  const timeline = await getContentSection("timeline");
   return (
     <section className="relative py-20 lg:py-28">
       <Container>
@@ -13,7 +14,7 @@ export function Timeline() {
           <div className="absolute left-[27px] top-2 bottom-2 hidden w-px bg-white/10 sm:block" />
           {timeline.map((item) => (
             <RevealItem key={item.year} className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-8">
-              <div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-white/15 bg-ink font-display text-xs font-semibold text-violet-soft">
+              <div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-white/15 bg-ink font-display text-xs font-semibold text-brand-bright">
                 {item.year}
               </div>
               <div className="flex-1 rounded-2xl border border-white/10 bg-surface/60 p-6">

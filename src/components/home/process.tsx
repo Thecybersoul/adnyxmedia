@@ -1,9 +1,10 @@
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
-import { process } from "@/lib/data/site";
+import { getContentSection } from "@/lib/db/content";
 
-export function Process() {
+export async function Process() {
+  const process = await getContentSection("process");
   return (
     <section className="relative border-y border-white/10 bg-ink-soft py-24 lg:py-32">
       <Container>
@@ -18,7 +19,7 @@ export function Process() {
           <div className="absolute inset-x-0 top-6 hidden h-px bg-gradient-to-r from-transparent via-white/15 to-transparent lg:block" />
           {process.map((item) => (
             <RevealItem key={item.step} className="relative">
-              <div className="relative z-10 flex size-12 items-center justify-center rounded-full border border-white/15 bg-ink font-display text-sm font-semibold text-violet-soft">
+              <div className="relative z-10 flex size-12 items-center justify-center rounded-full border border-white/15 bg-ink font-display text-sm font-semibold text-brand-bright">
                 {item.step}
               </div>
               <h3 className="mt-5 font-display text-lg font-medium text-mist">

@@ -6,23 +6,25 @@ import {
   Radar,
   Palette,
   ClipboardList,
+  Sparkles,
   ArrowUpRight,
 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
-import { services } from "@/lib/data/site";
+import { getContentSection } from "@/lib/db/content";
 
-const icons = {
+const icons: Record<string, typeof Monitor> = {
   "digital-billboards": Monitor,
   "static-hoardings": Landmark,
   "transit-gantry": Signpost,
   "programmatic-dooh": Radar,
   "creative-production": Palette,
   "campaign-management": ClipboardList,
-} as const;
+};
 
-export function ServicesOverview() {
+export async function ServicesOverview() {
+  const services = await getContentSection("services");
   return (
     <section className="relative py-24 lg:py-32">
       <Container>
@@ -43,7 +45,7 @@ export function ServicesOverview() {
 
         <RevealGroup className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service) => {
-            const Icon = icons[service.id as keyof typeof icons];
+            const Icon = icons[service.id] ?? Sparkles;
             return (
               <RevealItem key={service.id}>
                 <Link
@@ -52,9 +54,9 @@ export function ServicesOverview() {
                 >
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-violet/0 blur-2xl transition-colors duration-500 group-hover:bg-violet/25"
+                    className="pointer-events-none absolute -right-10 -top-10 size-32 rounded-full bg-brand/0 blur-2xl transition-colors duration-500 group-hover:bg-brand/25"
                   />
-                  <div className="flex size-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-violet-soft">
+                  <div className="flex size-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-brand-bright">
                     <Icon className="size-5" />
                   </div>
                   <h3 className="mt-5 font-display text-lg font-medium text-mist">
@@ -63,7 +65,7 @@ export function ServicesOverview() {
                   <p className="mt-2 text-sm leading-relaxed text-mist-dim">
                     {service.short}
                   </p>
-                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-mist-dim transition-colors group-hover:text-violet-soft">
+                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-mist-dim transition-colors group-hover:text-brand-bright">
                     Learn more
                     <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </span>

@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
-import { locations } from "@/lib/data/locations";
+import { getLocations } from "@/lib/db/locations";
 
 const base = "https://www.adnyx.in";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = ["", "/locations", "/services", "/about", "/contact"].map((path) => ({
     url: `${base}${path}`,
     lastModified: new Date(),
@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === "" ? 1 : 0.8,
   }));
 
+  const locations = await getLocations();
   const locationRoutes = locations.map((loc) => ({
     url: `${base}/locations/${loc.slug}`,
     lastModified: new Date(),

@@ -1,8 +1,9 @@
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
-import { services } from "@/lib/data/site";
+import { getContentSection } from "@/lib/db/content";
 
-export function ServicesIndex() {
+export async function ServicesIndex() {
+  const services = await getContentSection("services");
   return (
     <section className="relative pb-16">
       <Container>

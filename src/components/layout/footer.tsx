@@ -3,16 +3,21 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/ui/logo";
 import { InstagramIcon, LinkedInIcon, XIcon } from "@/components/ui/social-icons";
-import { company, navLinks, services } from "@/lib/data/site";
+import { navLinks } from "@/lib/data/site";
+import { getContentSection } from "@/lib/db/content";
 
-export function Footer() {
+export async function Footer() {
   const year = new Date().getFullYear();
+  const [company, services] = await Promise.all([
+    getContentSection("company"),
+    getContentSection("services"),
+  ]);
 
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-ink-soft">
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-32 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-violet/10 blur-[120px]"
+        className="pointer-events-none absolute -bottom-32 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-brand/10 blur-[120px]"
       />
       <Container className="relative py-16">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
@@ -64,17 +69,17 @@ export function Footer() {
             <h4 className="text-sm font-semibold text-mist">Get in touch</h4>
             <ul className="mt-4 space-y-3 text-sm text-mist-dim">
               <li className="flex items-start gap-2.5">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-violet-soft" />
+                <MapPin className="mt-0.5 size-4 shrink-0 text-brand-bright" />
                 <span>{company.address}</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Phone className="size-4 shrink-0 text-violet-soft" />
+                <Phone className="size-4 shrink-0 text-brand-bright" />
                 <a href={`tel:${company.phone}`} className="transition-colors hover:text-mist">
                   {company.phone}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Mail className="size-4 shrink-0 text-violet-soft" />
+                <Mail className="size-4 shrink-0 text-brand-bright" />
                 <a href={`mailto:${company.email}`} className="transition-colors hover:text-mist">
                   {company.email}
                 </a>

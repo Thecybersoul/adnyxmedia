@@ -3,11 +3,10 @@
 import { useState } from "react";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { ButtonEl } from "@/components/ui/button";
-import { company } from "@/lib/data/site";
 
 const budgetOptions = ["< ₹1L", "₹1L – ₹5L", "₹5L – ₹15L", "₹15L+"];
 
-export function ContactForm() {
+export function ContactForm({ email }: { email: string }) {
   const [status, setStatus] = useState<"idle" | "submitting" | "sent">("idle");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -22,7 +21,7 @@ export function ContactForm() {
     );
 
     window.setTimeout(() => {
-      window.location.href = `mailto:${company.email}?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
       setStatus("sent");
     }, 500);
   }
@@ -30,13 +29,13 @@ export function ContactForm() {
   if (status === "sent") {
     return (
       <div className="flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-surface/60 px-8 py-16 text-center">
-        <CheckCircle2 className="size-10 text-cyan" />
+        <CheckCircle2 className="size-10 text-signal" />
         <h3 className="mt-4 font-display text-xl font-medium text-mist">Almost there</h3>
         <p className="mt-2 max-w-sm text-sm text-mist-dim">
           Your email app should now be open with your message ready to send.
           If it didn&apos;t open, email us directly at{" "}
-          <a href={`mailto:${company.email}`} className="text-violet-soft">
-            {company.email}
+          <a href={`mailto:${email}`} className="text-brand-bright">
+            {email}
           </a>
           .
         </p>
@@ -65,7 +64,7 @@ export function ContactForm() {
                 defaultChecked={i === 0}
                 className="peer sr-only"
               />
-              <span className="inline-flex rounded-full border border-white/10 px-4 py-2 text-xs font-medium text-mist-dim transition-colors peer-checked:border-violet/40 peer-checked:bg-violet/20 peer-checked:text-violet-soft">
+              <span className="inline-flex rounded-full border border-white/10 px-4 py-2 text-xs font-medium text-mist-dim transition-colors peer-checked:border-brand/40 peer-checked:bg-brand/20 peer-checked:text-brand-bright">
                 {b}
               </span>
             </label>
@@ -83,7 +82,7 @@ export function ContactForm() {
           rows={5}
           required
           placeholder="Sites you're interested in, timelines, campaign goals…"
-          className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-sm text-mist placeholder:text-mist-faint focus:border-violet/40 focus:outline-none"
+          className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-sm text-mist placeholder:text-mist-faint focus:border-brand/40 focus:outline-none"
         />
       </div>
 
@@ -125,7 +124,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-sm text-mist placeholder:text-mist-faint focus:border-violet/40 focus:outline-none"
+        className="w-full rounded-xl border border-white/10 bg-ink px-4 py-3 text-sm text-mist placeholder:text-mist-faint focus:border-brand/40 focus:outline-none"
       />
     </div>
   );

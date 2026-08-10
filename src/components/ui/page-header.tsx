@@ -17,7 +17,7 @@ export function PageHeader({
       <GlowOrbs className="opacity-70" />
       <Container className="relative text-center">
         <Reveal>
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-violet-soft">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-brand-bright">
             {eyebrow}
           </span>
         </Reveal>

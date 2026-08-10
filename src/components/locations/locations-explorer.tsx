@@ -90,7 +90,7 @@ function FilterGroup<T extends string>({
           className={cn(
             "rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
             value === option
-              ? "border-violet/40 bg-violet/20 text-violet-soft"
+              ? "border-brand/40 bg-brand/20 text-brand-bright"
               : "border-white/10 bg-transparent text-mist-dim hover:border-white/20 hover:text-mist"
           )}
         >

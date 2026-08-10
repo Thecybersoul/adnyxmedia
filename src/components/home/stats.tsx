@@ -1,9 +1,10 @@
 import { Container } from "@/components/ui/container";
 import { Counter } from "@/components/ui/counter";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
-import { stats } from "@/lib/data/site";
+import { getContentSection } from "@/lib/db/content";
 
-export function Stats() {
+export async function Stats() {
+  const stats = await getContentSection("stats");
   return (
     <section className="relative border-y border-white/10 bg-ink-soft py-16">
       <Container>

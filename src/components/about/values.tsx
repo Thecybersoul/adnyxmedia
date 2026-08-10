@@ -1,9 +1,10 @@
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
-import { values } from "@/lib/data/site";
+import { getContentSection } from "@/lib/db/content";
 
-export function Values() {
+export async function Values() {
+  const values = await getContentSection("values");
   return (
     <section className="relative border-y border-white/10 bg-ink-soft py-20 lg:py-28">
       <Container>

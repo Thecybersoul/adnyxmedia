@@ -4,9 +4,10 @@ import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { LocationCard } from "@/components/locations/location-card";
-import { locations } from "@/lib/data/locations";
+import { getLocations } from "@/lib/db/locations";
 
-export function FeaturedLocations() {
+export async function FeaturedLocations() {
+  const locations = await getLocations();
   const featured = locations.slice(0, 6);
 
   return (

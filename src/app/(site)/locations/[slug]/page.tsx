@@ -15,11 +15,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LocationCard } from "@/components/locations/location-card";
-import { locations } from "@/lib/data/locations";
-
-export function generateStaticParams() {
-  return locations.map((loc) => ({ slug: loc.slug }));
-}
+import { getLocationBySlug, getLocations } from "@/lib/db/locations";
 
 export async function generateMetadata({
   params,
@@ -27,7 +23,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const location = locations.find((loc) => loc.slug === slug);
+  const location = await getLocationBySlug(slug);
   if (!location) return {};
   return {
     title: `${location.name} — ${location.area}`,
@@ -49,10 +45,11 @@ export default async function LocationDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const location = locations.find((loc) => loc.slug === slug);
+  const location = await getLocationBySlug(slug);
   if (!location) notFound();
 
-  const related = locations
+  const allLocations = await getLocations();
+  const related = allLocations
     .filter((loc) => loc.id !== location.id && (loc.zone === location.zone || loc.type === location.type))
     .slice(0, 3);
 
@@ -82,22 +79,42 @@ export default async function LocationDetailPage({
                   {location.name}
                 </h1>
                 <p className="mt-3 flex items-center gap-2 text-mist-dim">
-                  <MapPin className="size-4 shrink-0 text-violet-soft" />
+                  <MapPin className="size-4 shrink-0 text-brand-bright" />
                   {location.area} · {location.landmark}
                 </p>
               </Reveal>
 
               <Reveal delay={0.1}>
-                <div
-                  className="relative mt-8 aspect-[16/9] overflow-hidden rounded-2xl border border-white/10"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${location.hue[0]}, ${location.hue[1]})`,
-                  }}
-                >
-                  <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.15)_1px,transparent_1px)] [background-size:100%_3px] mix-blend-overlay" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Radio className="size-10 text-ink/60" />
-                  </div>
+                <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-2xl border border-white/10">
+                  {location.videoUrl ? (
+                    <video
+                      src={location.videoUrl}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="absolute inset-0 size-full object-cover"
+                    />
+                  ) : location.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={location.imageUrl}
+                      alt={location.name}
+                      className="absolute inset-0 size-full object-cover"
+                    />
+                  ) : (
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, ${location.hue[0]}, ${location.hue[1]})`,
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.15)_1px,transparent_1px)] [background-size:100%_3px] mix-blend-overlay" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Radio className="size-10 text-ink/60" />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </Reveal>
 
@@ -175,7 +192,7 @@ function Spec({
   return (
     <div className="flex items-center justify-between gap-4 border-b border-white/5 pb-4 last:border-0 last:pb-0">
       <dt className="flex items-center gap-2 text-sm text-mist-dim">
-        <Icon className="size-4 text-violet-soft" />
+        <Icon className="size-4 text-brand-bright" />
         {label}
       </dt>
       <dd className="text-sm font-medium text-mist">{value}</dd>

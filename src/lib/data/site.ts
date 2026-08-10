@@ -1,4 +1,15 @@
-export const company = {
+import type {
+  CompanyContent,
+  HeroContent,
+  StatItem,
+  ServiceItem,
+  ProcessStep,
+  Testimonial,
+  ValueItem,
+  TimelineItem,
+} from "@/types/content";
+
+export const company: CompanyContent = {
   name: "ADNYX",
   legalName: "Adnyx Media",
   tagline: "The city is your canvas.",
@@ -15,6 +26,19 @@ export const company = {
   },
 };
 
+export const heroDefault: HeroContent = {
+  badge: "60+ live sites across Bangalore",
+  headline: "The city is your",
+  headlineAccent: "canvas after dark.",
+  subheadline:
+    "ADNYX owns and operates Bangalore's premium digital billboard network — turning the city's busiest junctions into stages for the brands who show up on them.",
+  primaryCtaLabel: "Explore live inventory",
+  primaryCtaHref: "/locations",
+  secondaryCtaLabel: "Talk to our team",
+  secondaryCtaHref: "/contact",
+  mediaCaption: "MG Road Junction · Live now",
+};
+
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/locations", label: "Locations" },
@@ -23,14 +47,14 @@ export const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-export const stats = [
+export const stats: StatItem[] = [
   { value: 60, suffix: "+", label: "Premium sites across Bangalore" },
   { value: 8.4, suffix: "M+", label: "Daily impressions delivered" },
   { value: 120, suffix: "+", label: "Brands run with ADNYX" },
   { value: 99.2, suffix: "%", label: "Campaign uptime, on average" },
 ];
 
-export const services = [
+export const services: ServiceItem[] = [
   {
     id: "digital-billboards",
     title: "Digital Billboards",
@@ -111,7 +135,7 @@ export const services = [
   },
 ];
 
-export const process = [
+export const process: ProcessStep[] = [
   {
     step: "01",
     title: "Plan",
@@ -134,7 +158,7 @@ export const process = [
   },
 ];
 
-export const testimonials = [
+export const testimonials: Testimonial[] = [
   {
     quote:
       "ADNYX got our launch campaign live across six junctions in under 72 hours. The Silk Board screen alone drove a visible spike in app installs that week.",
@@ -155,12 +179,12 @@ export const testimonials = [
   },
 ];
 
-export const clients = [
+export const clients: string[] = [
   "Zylo", "Kavan Foods", "Nimbus Bank", "Uplink", "Fernweh Travel",
   "Sundown Motors", "Loop Fintech", "Verve Retail", "Northstar Realty", "Pulse Wearables",
 ];
 
-export const values = [
+export const values: ValueItem[] = [
   {
     title: "Own the asset, own the outcome",
     description:
@@ -183,7 +207,7 @@ export const values = [
   },
 ];
 
-export const timeline = [
+export const timeline: TimelineItem[] = [
   {
     year: "2019",
     title: "ADNYX founded",

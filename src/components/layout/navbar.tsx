@@ -6,11 +6,11 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { navLinks, company } from "@/lib/data/site";
+import { navLinks } from "@/lib/data/site";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
 
-export function Navbar() {
+export function Navbar({ companyName }: { companyName: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -38,7 +38,7 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-        <Link href="/" className="flex items-center gap-2" aria-label={company.name}>
+        <Link href="/" className="flex items-center gap-2" aria-label={companyName}>
           <Logo />
         </Link>
 

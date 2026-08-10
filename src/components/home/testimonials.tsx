@@ -2,9 +2,10 @@ import { Quote } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { RevealGroup, RevealItem } from "@/components/ui/reveal";
-import { testimonials } from "@/lib/data/site";
+import { getContentSection } from "@/lib/db/content";
 
-export function Testimonials() {
+export async function Testimonials() {
+  const testimonials = await getContentSection("testimonials");
   return (
     <section className="relative py-24 lg:py-32">
       <Container>
@@ -19,7 +20,7 @@ export function Testimonials() {
           {testimonials.map((t) => (
             <RevealItem key={t.name}>
               <figure className="flex h-full flex-col rounded-2xl border border-white/10 bg-surface/60 p-7">
-                <Quote className="size-6 text-violet-soft" />
+                <Quote className="size-6 text-brand-bright" />
                 <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-mist-dim">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>

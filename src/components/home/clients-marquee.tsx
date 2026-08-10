@@ -1,8 +1,9 @@
 import { Container } from "@/components/ui/container";
 import { Marquee } from "@/components/ui/marquee";
-import { clients } from "@/lib/data/site";
+import { getContentSection } from "@/lib/db/content";
 
-export function ClientsMarquee() {
+export async function ClientsMarquee() {
+  const clients = await getContentSection("clients");
   return (
     <section className="relative py-16">
       <Container>

@@ -7,7 +7,7 @@ import { MapPin } from "lucide-react";
 import { InventoryLocation } from "@/types/location";
 
 const dotColor = {
-  Available: "bg-cyan",
+  Available: "bg-signal",
   Booked: "bg-mist-faint",
   "Coming Soon": "bg-amber",
 } as const;
@@ -35,7 +35,7 @@ export function NetworkMap({ locations }: { locations: InventoryLocation[] }) {
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,92,255,0.14),transparent_65%)]"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(228,38,42,0.14),transparent_65%)]"
       />
 
       {locations.map((loc) => (
@@ -51,7 +51,7 @@ export function NetworkMap({ locations }: { locations: InventoryLocation[] }) {
         >
           <span className="relative flex size-3">
             {loc.availability === "Available" && (
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan opacity-60" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-60" />
             )}
             <span
               className={`relative inline-flex size-3 rounded-full ring-2 ring-ink transition-transform ${dotColor[loc.availability]} ${
@@ -77,7 +77,7 @@ export function NetworkMap({ locations }: { locations: InventoryLocation[] }) {
             }}
           >
             <p className="flex items-center gap-1.5 text-xs font-medium text-mist-dim">
-              <MapPin className="size-3.5 text-violet-soft" />
+              <MapPin className="size-3.5 text-brand-bright" />
               {active.area}
             </p>
             <p className="mt-1 font-display text-sm font-medium text-mist">{active.name}</p>
@@ -87,7 +87,7 @@ export function NetworkMap({ locations }: { locations: InventoryLocation[] }) {
       </AnimatePresence>
 
       <div className="absolute bottom-4 left-4 flex flex-wrap items-center gap-4 rounded-full border border-white/10 bg-ink/70 px-4 py-2 backdrop-blur">
-        <Legend color="bg-cyan" label="Available" />
+        <Legend color="bg-signal" label="Available" />
         <Legend color="bg-mist-faint" label="Booked" />
         <Legend color="bg-amber" label="Coming soon" />
       </div>

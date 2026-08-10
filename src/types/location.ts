@@ -26,4 +26,6 @@ export interface InventoryLocation {
   highlights: string[];
   hue: [string, string];
   position: { x: number; y: number };
+  imageUrl?: string;
+  videoUrl?: string;
 }
