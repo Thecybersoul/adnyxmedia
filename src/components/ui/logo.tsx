@@ -6,7 +6,7 @@ export function Logo({ className, variant = "full" }: { className?: string; vari
     return (
       <div className={cn("relative shrink-0", className)}>
         <Image
-          src="/images/adnyx-icon-red.svg"
+          src="/images/adnyx-icon.svg"
           alt="ADNYX"
           width={36}
           height={36}
@@ -20,7 +20,7 @@ export function Logo({ className, variant = "full" }: { className?: string; vari
   return (
     <div className={cn("relative", className)}>
       <Image
-        src="/images/adnyx-logo-white.svg"
+        src="/images/adnyx-logo.svg"
         alt="ADNYX - Your Ad-vantage"
         width={160}
         height={44}
