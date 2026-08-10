@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/ui/logo";
-import { InstagramIcon, LinkedInIcon, XIcon } from "@/components/ui/social-icons";
+import { InstagramIcon, LinkedInIcon, FacebookIcon } from "@/components/ui/social-icons";
 import { company, navLinks, services } from "@/lib/data/site";
 
 export function Footer() {
