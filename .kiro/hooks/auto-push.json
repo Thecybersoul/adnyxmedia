@@ -2,12 +2,12 @@
   "version": "v1",
   "hooks": [
     {
-      "name": "Auto Push to Remote",
+      "name": "Auto Push to Main",
       "trigger": "PostFileSave",
-      "description": "Automatically push commits to the remote repository after file saves",
+      "description": "Automatically push commits to main branch after file saves",
       "action": {
         "type": "command",
-        "command": "git push origin HEAD 2>&1",
+        "command": "git add -A && git commit -m \"Auto-save: $(date +%Y-%m-%d_%H:%M:%S)\" && git push origin main 2>&1 || echo 'No changes to commit'",
         "timeout": 30
       }
     }
