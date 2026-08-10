@@ -18,7 +18,7 @@ export function OrganizationJsonLd() {
       addressCountry: "IN",
     },
     areaServed: "Bangalore, India",
-    sameAs: [company.social.instagram, company.social.linkedin, company.social.twitter],
+    sameAs: [company.social.instagram, company.social.linkedin, company.social.facebook],
   };
 
   return (
