@@ -14,10 +14,16 @@
   --color-mist-dim: #a3a1b5;
   --color-mist-faint: #6b6a80;
 
-  --color-violet: #7c5cff;
-  --color-violet-soft: #a48bff;
+  /* ADNYX Brand Colors - Red Theme */
+  --color-adnyx-red: #C13C3C;
+  --color-adnyx-red-dark: #9E2F2F;
+  --color-adnyx-red-light: #E65050;
+  
+  /* Legacy color mappings for compatibility */
+  --color-violet: #C13C3C;
+  --color-violet-soft: #E65050;
   --color-cyan: #2ee6d6;
-  --color-magenta: #ff4fd8;
+  --color-magenta: #C13C3C;
   --color-amber: #ffb84f;
 
   --animate-marquee: marquee 32s linear infinite;
@@ -76,7 +82,7 @@ body {
 }
 
 ::selection {
-  background: var(--color-violet);
+  background: var(--color-adnyx-red);
   color: white;
 }
 
@@ -98,14 +104,14 @@ body {
   border: 2px solid var(--color-ink);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-violet);
+  background: var(--color-adnyx-red);
 }
 
 .text-gradient {
   background-image: linear-gradient(
     100deg,
     var(--color-mist) 10%,
-    var(--color-violet-soft) 45%,
+    var(--color-adnyx-red-light) 45%,
     var(--color-cyan) 70%,
     var(--color-mist) 100%
   );

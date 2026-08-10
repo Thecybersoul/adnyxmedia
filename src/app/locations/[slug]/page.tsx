@@ -15,6 +15,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LocationCard } from "@/components/locations/location-card";
+import { LocationImage } from "@/components/locations/location-image";
 import { locations } from "@/lib/data/locations";
 
 export function generateStaticParams() {
@@ -88,17 +89,14 @@ export default async function LocationDetailPage({
               </Reveal>
 
               <Reveal delay={0.1}>
-                <div
-                  className="relative mt-8 aspect-[16/9] overflow-hidden rounded-2xl border border-white/10"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${location.hue[0]}, ${location.hue[1]})`,
-                  }}
-                >
-                  <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.15)_1px,transparent_1px)] [background-size:100%_3px] mix-blend-overlay" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Radio className="size-10 text-ink/60" />
-                  </div>
-                </div>
+                <LocationImage
+                  slug={location.slug}
+                  name={location.name}
+                  area={location.area}
+                  hue={location.hue}
+                  priority={true}
+                  className="mt-8 aspect-[16/9] rounded-2xl border border-white/10"
+                />
               </Reveal>
 
               <Reveal delay={0.16}>

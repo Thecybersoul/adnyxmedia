@@ -40,7 +40,7 @@ This site was built without access to the live adnyx.in content (blocked in the 
 
 1. **`src/lib/data/site.ts`** — company email/phone/address/social links, testimonials, client names, timeline/founding year. All currently illustrative.
 2. **`src/lib/data/locations.ts`** — the 14 sample billboard sites (names, dimensions, resolution, daily impressions, map position). Replace with ADNYX's real inventory. Each entry's `position: {x, y}` is a percentage coordinate on the stylized map in `/locations` — adjust to roughly match real site locations relative to each other.
-3. Swap the gradient placeholder tiles (`hue` field on each location) for real site photos once available — update `LocationCard` and the location detail page to render an `<Image>` instead of the CSS gradient.
+3. **Billboard photos** — The site uses gradient placeholders and will automatically display real photos when you add them to `public/images/locations/`. See **[IMAGES.md](./IMAGES.md)** for complete instructions on image requirements, naming conventions, and optimization tips.
 4. Update social links, and consider adding real Google Business/Maps embed on the Contact page if desired.
 
 ## Deploying to Vercel (free tier)

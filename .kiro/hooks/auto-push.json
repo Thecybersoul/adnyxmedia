@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Auto Push to Remote",
+      "trigger": "PostFileSave",
+      "description": "Automatically push commits to the remote repository after file saves",
+      "action": {
+        "type": "command",
+        "command": "git push origin HEAD 2>&1",
+        "timeout": 30
+      }
+    }
+  ]
+}

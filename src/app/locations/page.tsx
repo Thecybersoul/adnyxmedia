@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/page-header";
 import { Container } from "@/components/ui/container";
-import { Reveal } from "@/components/ui/reveal";
-import { NetworkMap } from "@/components/locations/network-map";
 import { LocationsExplorer } from "@/components/locations/locations-explorer";
 import { CtaSection } from "@/components/home/cta-section";
 import { locations } from "@/lib/data/locations";
@@ -21,14 +19,6 @@ export default function LocationsPage() {
         title="Every site. Mapped, measured, ready to book."
         description="Our full network of digital billboards, hoardings and gantry sites across Bangalore — with real specs, traffic estimates and live availability."
       />
-
-      <section className="relative pb-8">
-        <Container>
-          <Reveal>
-            <NetworkMap locations={locations} />
-          </Reveal>
-        </Container>
-      </section>
 
       <section className="relative py-16 lg:py-20">
         <Container>
