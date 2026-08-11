@@ -52,15 +52,37 @@ export function isDbConfigured(): boolean {
 // later calls — in this request and the next few — skip straight to the
 // fallback instead of trying again.
 const FAILURE_COOLDOWN_MS = 30_000;
+// Belt-and-suspenders on top of connect_timeout above: that timer is
+// started by the `postgres` driver once it begins connecting, but a bad
+// host can also hang earlier — in DNS resolution — before the driver's own
+// clock even starts. A wall-clock deadline around the whole probe bounds
+// the worst case regardless of which stage actually gets stuck.
+const PROBE_DEADLINE_MS = 4_000;
 let lastFailureAt = 0;
 let inFlightProbe: Promise<boolean> | null = null;
+
+function withDeadline<T>(promise: Promise<T>, ms: number): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(`Timed out after ${ms}ms`)), ms);
+    promise.then(
+      (value) => {
+        clearTimeout(timer);
+        resolve(value);
+      },
+      (err) => {
+        clearTimeout(timer);
+        reject(err);
+      }
+    );
+  });
+}
 
 export function isDbAvailable(): Promise<boolean> {
   if (!sql) return Promise.resolve(false);
   if (Date.now() - lastFailureAt < FAILURE_COOLDOWN_MS) return Promise.resolve(false);
   if (inFlightProbe) return inFlightProbe;
 
-  inFlightProbe = sql`SELECT 1`
+  inFlightProbe = withDeadline(sql`SELECT 1`, PROBE_DEADLINE_MS)
     .then(() => true)
     .catch((err) => {
       console.error("Database connection probe failed — falling back to static content.", err);
