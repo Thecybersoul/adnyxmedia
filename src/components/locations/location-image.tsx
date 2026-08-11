@@ -28,6 +28,7 @@ export function LocationImage({
   priority = false,
   className = "",
 }: LocationImageProps) {
+  const [uploadedImageError, setUploadedImageError] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [showNight, setShowNight] = useState(false);
   const imagePath = `/images/locations/${slug}${showNight ? "-night" : ""}.jpg`;
@@ -43,11 +44,16 @@ export function LocationImage({
           playsInline
           className="absolute inset-0 size-full object-cover"
         />
-      ) : imageUrl ? (
+      ) : imageUrl && !uploadedImageError ? (
         // Admin-uploaded override (Vercel Blob URL) — plain <img> since it's an
         // arbitrary remote host not covered by next/image's domain allowlist.
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={imageUrl} alt={`${name} - ${area}`} className="absolute inset-0 size-full object-cover" />
+        <img
+          src={imageUrl}
+          alt={`${name} - ${area}`}
+          className="absolute inset-0 size-full object-cover"
+          onError={() => setUploadedImageError(true)}
+        />
       ) : !imageError ? (
         <Image
           key={imagePath}
@@ -74,7 +80,7 @@ export function LocationImage({
         </div>
       )}
 
-      {hasNightImage && !imageUrl && !videoUrl && !imageError && (
+      {hasNightImage && (!imageUrl || uploadedImageError) && !videoUrl && !imageError && (
         <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full border border-white/10 bg-ink/70 p-1 backdrop-blur">
           <button
             type="button"

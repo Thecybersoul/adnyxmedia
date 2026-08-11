@@ -32,7 +32,9 @@ export function AdminSidebar() {
   return (
     <>
       <div className="flex items-center justify-between border-b border-white/10 bg-ink-soft px-4 py-3 lg:hidden">
-        <Logo />
+        <Link href="/admin" aria-label="Go to dashboard home">
+          <Logo />
+        </Link>
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -59,7 +61,9 @@ export function AdminSidebar() {
         )}
       >
         <div className="hidden border-b border-white/10 px-5 py-5 lg:block">
-          <Logo />
+          <Link href="/admin" aria-label="Go to dashboard home">
+            <Logo />
+          </Link>
           <span className="mt-1 block text-xs font-medium uppercase tracking-wide text-mist-faint">
             Admin
           </span>

@@ -18,22 +18,14 @@ export async function Story() {
           </Reveal>
           <div className="space-y-5 text-base leading-relaxed text-mist-dim">
             <Reveal delay={0.06}>
-              <p>
-                <span className="text-mist">ADNYX</span> takes its name from
-                Nyx — in Greek myth, the primordial goddess of night. It&apos;s
-                a fitting namesake: our screens do their best work after dark,
-                when Bangalore&apos;s skyline becomes a canvas of light.
-              </p>
-            </Reveal>
-            <Reveal delay={0.12}>
               <p>{company.description}</p>
             </Reveal>
-            <Reveal delay={0.18}>
+            <Reveal delay={0.12}>
               <p>
                 We&apos;re a media owner first — every hoarding and LED
                 screen in our network is planned, built, permitted and
-                maintained by our own team, so brands get a single point of
-                accountability from site to screen.
+                maintained by our own team, so brands get one accountable
+                partner from site to screen.
               </p>
             </Reveal>
           </div>

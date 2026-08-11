@@ -13,7 +13,7 @@ export const contentSections: ContentSectionMeta[] = [
   { key: "services", label: "Services", description: "Service cards shown on Home and the Services page." },
   { key: "process", label: "Process Steps", description: "The 4-step \"how it works\" section." },
   { key: "testimonials", label: "Testimonials", description: "Client quotes shown on Home." },
-  { key: "clients", label: "Client Marquee", description: "Scrolling list of client names." },
+  { key: "trustedBrands", label: "Trusted Brands", description: "Client logos shown in the trusted-brands section on Home." },
   { key: "values", label: "Our Values", description: "The 4 value cards on the About page." },
   { key: "timeline", label: "Company Timeline", description: "Milestones shown on the About page." },
 ];

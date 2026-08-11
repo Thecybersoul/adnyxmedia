@@ -5,6 +5,7 @@ import type {
   ServiceItem,
   ProcessStep,
   Testimonial,
+  TrustedBrand,
   ValueItem,
   TimelineItem,
 } from "@/types/content";
@@ -49,9 +50,8 @@ export const navLinks = [
 ];
 
 export const stats: StatItem[] = [
-  { value: 60, suffix: "+", label: "Premium sites across Bangalore" },
-  { value: 8.4, suffix: "M+", label: "Daily impressions delivered" },
-  { value: 120, suffix: "+", label: "Brands run with ADNYX" },
+  { value: 5, suffix: "+", label: "Premium sites across Bangalore" },
+  { value: 20, suffix: "+", label: "Brands run with ADNYX" },
   { value: 99.2, suffix: "%", label: "Campaign uptime, on average" },
 ];
 
@@ -93,19 +93,6 @@ export const services: ServiceItem[] = [
       "Multi-directional traffic exposure",
       "Ideal for mass-reach launch campaigns",
       "Bundled multi-site corridor packages",
-    ],
-  },
-  {
-    id: "programmatic-dooh",
-    title: "Programmatic DOOH",
-    short: "Buy inventory the modern way — audience-led, data-backed, on demand.",
-    description:
-      "Plug into our screens programmatically. Target by daypart, weather, or live triggers, and measure delivery with independent verification partners.",
-    points: [
-      "SSP / DSP integration for our digital network",
-      "Weather- and event-triggered creative",
-      "Real-time proof-of-play reporting",
-      "Third-party audience measurement",
     ],
   },
   {
@@ -180,13 +167,11 @@ export const testimonials: Testimonial[] = [
   },
 ];
 
-export const clients: string[] = [
-  "Prestige Group",
-  "Courtyard by Sublime",
-  "Sublime",
-  "British Petroleum",
-  "Hoppr",
-  "and many more",
+export const trustedBrands: TrustedBrand[] = [
+  { name: "Prestige Group" },
+  { name: "Courtyard by Marriott" },
+  { name: "British Petroleum" },
+  { name: "Hoppr" },
 ];
 
 export const values: ValueItem[] = [
@@ -214,23 +199,13 @@ export const values: ValueItem[] = [
 
 export const timeline: TimelineItem[] = [
   {
-    year: "2019",
+    year: "2024",
     title: "ADNYX founded",
-    description: "Started with a single static hoarding on Bannerghatta Road and a conviction that Bangalore's OOH market deserved better operators.",
-  },
-  {
-    year: "2021",
-    title: "First digital sites go live",
-    description: "Converted our flagship static sites to full-motion LED, bringing programmatic-ready DOOH to the network.",
-  },
-  {
-    year: "2023",
-    title: "Network crosses 40 sites",
-    description: "Expanded across all major traffic corridors — MG Road to Whitefield, Hebbal to Electronic City.",
+    description: "Started in Bangalore with a simple premise: own the screens, control the quality, and give advertisers one accountable partner from site to screen.",
   },
   {
     year: "2026",
-    title: "60+ premium sites, 120+ brands",
-    description: "Today ADNYX runs one of Bangalore's most measured, best-located digital billboard networks.",
+    title: "5 live sites and growing",
+    description: "A young, fast-moving network across the city's busiest junctions — with new sites added as demand grows.",
   },
 ];

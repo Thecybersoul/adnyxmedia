@@ -20,6 +20,11 @@ const availabilityTone = {
 } as const;
 
 export function LocationCard({ location }: { location: InventoryLocation }) {
+  // The admin-uploaded imageUrl (Vercel Blob) can go stale — deleted from
+  // the library, a failed upload that still saved a record, etc. Fall back
+  // to the bundled static photo (and that to a gradient) instead of
+  // showing a permanently broken image with no way to recover.
+  const [uploadedImageError, setUploadedImageError] = useState(false);
   const [imageError, setImageError] = useState(false);
   const imagePath = `/images/locations/${location.slug}.jpg`;
 
@@ -29,7 +34,7 @@ export function LocationCard({ location }: { location: InventoryLocation }) {
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface/60 transition-all duration-300 hover:-translate-y-1 hover:border-white/20"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-ink">
-        {location.imageUrl ? (
+        {location.imageUrl && !uploadedImageError ? (
           // Admin-uploaded override (Vercel Blob URL) — plain <img> since it's an
           // arbitrary remote host not covered by next/image's domain allowlist.
           // eslint-disable-next-line @next/next/no-img-element
@@ -37,6 +42,7 @@ export function LocationCard({ location }: { location: InventoryLocation }) {
             src={location.imageUrl}
             alt={location.name}
             className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105"
+            onError={() => setUploadedImageError(true)}
           />
         ) : !imageError ? (
           <Image

@@ -5,7 +5,7 @@ import { getSectionMeta } from "@/lib/admin/content-sections";
 import { CompanyEditor } from "@/components/admin/editors/company-editor";
 import { HeroEditor } from "@/components/admin/editors/hero-editor";
 import { ListEditor } from "@/components/admin/editors/list-editor";
-import { StringListEditor } from "@/components/admin/editors/string-list-editor";
+import { TrustedBrandsEditor } from "@/components/admin/editors/trusted-brands-editor";
 import { ServicesEditor } from "@/components/admin/editors/services-editor";
 import type { SiteContent } from "@/types/content";
 
@@ -39,12 +39,8 @@ export default async function ContentSectionPage({
         {key === "company" && <CompanyEditor initial={await getContentSection("company")} />}
         {key === "hero" && <HeroEditor initial={await getContentSection("hero")} />}
         {key === "services" && <ServicesEditor initial={await getContentSection("services")} />}
-        {key === "clients" && (
-          <StringListEditor
-            sectionKey="clients"
-            initial={await getContentSection("clients")}
-            placeholder="Client name"
-          />
+        {key === "trustedBrands" && (
+          <TrustedBrandsEditor initial={await getContentSection("trustedBrands")} />
         )}
         {key === "stats" && (
           <ListEditor

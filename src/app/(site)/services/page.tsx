@@ -8,7 +8,7 @@ import { CtaSection } from "@/components/home/cta-section";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Digital billboards, static hoardings, transit and gantry media, programmatic DOOH, creative production and full campaign management — from Bangalore's ADNYX network.",
+    "Digital billboards, static hoardings, transit and gantry media, creative production and full campaign management — from Bangalore's ADNYX network.",
 };
 
 export default function ServicesPage() {
@@ -17,7 +17,7 @@ export default function ServicesPage() {
       <PageHeader
         eyebrow="Services"
         title="Every format. One accountable partner."
-        description="From high-resolution LED walls to landmark static hoardings — we plan, produce and operate the full outdoor media mix."
+        description="We plan, produce and operate the full outdoor media mix — from LED walls to landmark hoardings."
       />
       <ServicesIndex />
       <ServiceDetails />

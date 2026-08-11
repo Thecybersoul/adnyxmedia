@@ -7,7 +7,7 @@ import {
   services as servicesDefault,
   process as processDefault,
   testimonials as testimonialsDefault,
-  clients as clientsDefault,
+  trustedBrands as trustedBrandsDefault,
   values as valuesDefault,
   timeline as timelineDefault,
 } from "@/lib/data/site";
@@ -19,7 +19,7 @@ export const contentDefaults: SiteContent = {
   services: servicesDefault,
   process: processDefault,
   testimonials: testimonialsDefault,
-  clients: clientsDefault,
+  trustedBrands: trustedBrandsDefault,
   values: valuesDefault,
   timeline: timelineDefault,
 };

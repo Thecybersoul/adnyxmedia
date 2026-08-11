@@ -8,7 +8,7 @@ export async function Timeline() {
   return (
     <section className="relative py-20 lg:py-28">
       <Container>
-        <SectionHeading eyebrow="Our journey" title="From one hoarding to a citywide network." />
+        <SectionHeading eyebrow="Our journey" title="A young network, built fast." />
 
         <RevealGroup className="relative mt-16 space-y-10">
           <div className="absolute left-[27px] top-2 bottom-2 hidden w-px bg-white/10 sm:block" />

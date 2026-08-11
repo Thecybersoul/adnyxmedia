@@ -67,6 +67,11 @@ export interface TimelineItem {
   description: string;
 }
 
+export interface TrustedBrand {
+  name: string;
+  logoUrl?: string;
+}
+
 export interface SiteContent {
   company: CompanyContent;
   hero: HeroContent;
@@ -74,7 +79,7 @@ export interface SiteContent {
   services: ServiceItem[];
   process: ProcessStep[];
   testimonials: Testimonial[];
-  clients: string[];
+  trustedBrands: TrustedBrand[];
   values: ValueItem[];
   timeline: TimelineItem[];
 }

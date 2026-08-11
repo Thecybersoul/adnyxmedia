@@ -3,7 +3,6 @@ import {
   Monitor,
   Landmark,
   Signpost,
-  Radar,
   Palette,
   ClipboardList,
   Sparkles,
@@ -18,7 +17,6 @@ const icons: Record<string, typeof Monitor> = {
   "digital-billboards": Monitor,
   "static-hoardings": Landmark,
   "transit-gantry": Signpost,
-  "programmatic-dooh": Radar,
   "creative-production": Palette,
   "campaign-management": ClipboardList,
 };
@@ -32,7 +30,7 @@ export async function ServicesOverview() {
           <SectionHeading
             eyebrow="What we do"
             title="One partner, the full outdoor stack."
-            description="From site planning to creative production to live proof-of-play — we run the entire campaign, not just the screen."
+            description="Planning, creative and campaign management — handled end to end."
           />
           <Link
             href="/services"

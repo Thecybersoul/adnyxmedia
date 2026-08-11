@@ -7,10 +7,39 @@ import { GlowOrbs, GridBackdrop, Noise } from "@/components/ui/backdrop";
 import type { HeroContent } from "@/types/content";
 
 export function Hero({ hero }: { hero: HeroContent }) {
+  const hasVideo = hero.mediaType === "video" && !!hero.mediaUrl;
+  const hasImage = hero.mediaType === "image" && !!hero.mediaUrl;
+
   return (
-    <section className="relative overflow-hidden pt-40 pb-24 lg:pt-52 lg:pb-32">
-      <GridBackdrop />
-      <GlowOrbs />
+    <section className="relative overflow-hidden pt-28 pb-24 lg:pt-36 lg:pb-32">
+      {hasVideo || hasImage ? (
+        <div aria-hidden className="absolute inset-0">
+          {hasVideo ? (
+            <video
+              className="h-full w-full object-cover object-[54%_40%] sm:object-[52%_32%] lg:object-center"
+              src={hero.mediaUrl}
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={hero.mediaUrl}
+              alt=""
+              className="h-full w-full object-cover object-[50%_38%] sm:object-[50%_30%] lg:object-center"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-b from-ink/75 via-ink/70 to-ink" />
+          <div className="absolute inset-0 bg-ink/25" />
+        </div>
+      ) : (
+        <>
+          <GridBackdrop />
+          <GlowOrbs />
+        </>
+      )}
       <Noise />
 
       <Container className="relative">
@@ -20,7 +49,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
           transition={{ duration: 0.6 }}
           className="flex items-center justify-center"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-mist-dim">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-mist-dim backdrop-blur-sm">
             <span className="relative flex size-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-75" />
               <span className="relative inline-flex size-1.5 rounded-full bg-signal" />

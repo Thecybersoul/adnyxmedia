@@ -3,7 +3,6 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Logo } from "@/components/ui/logo";
 import { InstagramIcon, LinkedInIcon, FacebookIcon } from "@/components/ui/social-icons";
-import { navLinks } from "@/lib/data/site";
 import { getContentSection } from "@/lib/db/content";
 
 export async function Footer() {
@@ -20,7 +19,7 @@ export async function Footer() {
         className="pointer-events-none absolute -bottom-32 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-brand/10 blur-[120px]"
       />
       <Container className="relative py-16">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-4 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-3 lg:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Logo />
             <div className="mt-6 flex items-center gap-3">
@@ -36,19 +35,6 @@ export async function Footer() {
                 </SocialIcon>
               )}
             </div>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-semibold text-mist">Navigate</h4>
-            <ul className="mt-4 space-y-3">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-mist-dim transition-colors hover:text-mist">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div>

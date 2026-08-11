@@ -2,7 +2,6 @@ import {
   Monitor,
   Landmark,
   Signpost,
-  Radar,
   Palette,
   ClipboardList,
   Sparkles,
@@ -17,7 +16,6 @@ const icons: Record<string, typeof Monitor> = {
   "digital-billboards": Monitor,
   "static-hoardings": Landmark,
   "transit-gantry": Signpost,
-  "programmatic-dooh": Radar,
   "creative-production": Palette,
   "campaign-management": ClipboardList,
 };
