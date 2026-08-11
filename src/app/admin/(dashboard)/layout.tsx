@@ -8,11 +8,11 @@ export const dynamic = "force-dynamic";
 
 export default function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen flex-col lg:flex-row">
       <AdminSidebar />
-      <div className="flex-1">
+      <div className="min-w-0 flex-1">
         <DbStatusBanner />
-        <main className="mx-auto max-w-4xl px-8 py-10">{children}</main>
+        <main className="mx-auto max-w-4xl px-4 py-8 sm:px-8 sm:py-10">{children}</main>
       </div>
     </div>
   );

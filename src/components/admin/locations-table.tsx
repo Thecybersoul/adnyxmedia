@@ -33,8 +33,8 @@ export function LocationsTable({ locations }: { locations: InventoryLocation[] }
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10">
-      <table className="w-full text-left text-sm">
+    <div className="overflow-x-auto rounded-2xl border border-white/10">
+      <table className="w-full min-w-[560px] text-left text-sm">
         <thead className="bg-surface/60 text-xs uppercase tracking-wide text-mist-faint">
           <tr>
             <th className="px-4 py-3 font-medium">Name</th>

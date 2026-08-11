@@ -8,7 +8,7 @@ export function DbStatusBanner() {
   if (dbReady && blobReady) return null;
 
   return (
-    <div className="flex items-start gap-3 border-b border-amber/25 bg-amber/10 px-8 py-3 text-sm text-amber">
+    <div className="flex items-start gap-3 border-b border-amber/25 bg-amber/10 px-4 py-3 text-sm text-amber sm:px-8">
       <AlertTriangle className="mt-0.5 size-4 shrink-0" />
       <div>
         {!dbReady && (
