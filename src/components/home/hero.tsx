@@ -3,43 +3,38 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { GlowOrbs, GridBackdrop, Noise } from "@/components/ui/backdrop";
+import { Noise } from "@/components/ui/backdrop";
 import type { HeroContent } from "@/types/content";
 
+const DEFAULT_VIDEO_SRC = "/videos/hero-billboard.mp4";
+
 export function Hero({ hero }: { hero: HeroContent }) {
-  const hasVideo = hero.mediaType === "video" && !!hero.mediaUrl;
   const hasImage = hero.mediaType === "image" && !!hero.mediaUrl;
+  const videoSrc = hero.mediaType === "video" && hero.mediaUrl ? hero.mediaUrl : DEFAULT_VIDEO_SRC;
 
   return (
     <section className="relative overflow-hidden pt-28 pb-24 lg:pt-36 lg:pb-32">
-      {hasVideo || hasImage ? (
-        <div aria-hidden className="absolute inset-0">
-          {hasVideo ? (
-            <video
-              className="h-full w-full object-cover object-[54%_40%] sm:object-[52%_32%] lg:object-center"
-              src={hero.mediaUrl}
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={hero.mediaUrl}
-              alt=""
-              className="h-full w-full object-cover object-[50%_38%] sm:object-[50%_30%] lg:object-center"
-            />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-b from-ink/75 via-ink/70 to-ink" />
-          <div className="absolute inset-0 bg-ink/25" />
-        </div>
-      ) : (
-        <>
-          <GridBackdrop />
-          <GlowOrbs />
-        </>
-      )}
+      <div aria-hidden className="absolute inset-0">
+        {hasImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={hero.mediaUrl}
+            alt=""
+            className="h-full w-full object-cover object-[50%_38%] sm:object-[50%_30%] lg:object-center"
+          />
+        ) : (
+          <video
+            className="h-full w-full object-cover object-[54%_40%] sm:object-[52%_32%] lg:object-center"
+            src={videoSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/75 via-ink/70 to-ink" />
+        <div className="absolute inset-0 bg-ink/25" />
+      </div>
       <Noise />
 
       <Container className="relative">
