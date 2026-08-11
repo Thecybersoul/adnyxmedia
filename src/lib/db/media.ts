@@ -1,4 +1,4 @@
-import { sql, toWriteError } from "@/lib/db/client";
+import { sql, toWriteError, isDbAvailable, markDbFailure } from "@/lib/db/client";
 import type { AssetKind, MediaItem } from "@/types/media";
 
 interface MediaRow {
@@ -26,14 +26,15 @@ function rowToMedia(row: MediaRow): MediaItem {
 }
 
 export async function listMedia(): Promise<MediaItem[]> {
-  if (!sql) return [];
+  if (!(await isDbAvailable())) return [];
   try {
-    const rows = (await sql`
+    const rows = (await sql!`
       SELECT * FROM media ORDER BY created_at DESC
     `) as unknown as MediaRow[];
     return rows.map(rowToMedia);
   } catch (err) {
     console.error("Failed to load media library.", err);
+    markDbFailure();
     return [];
   }
 }
@@ -46,11 +47,11 @@ export async function createMediaRecord(input: {
   label: string;
   sizeBytes: number | null;
 }): Promise<MediaItem> {
-  if (!sql) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
+  if (!(await isDbAvailable())) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
 
   const id = crypto.randomUUID();
   try {
-    const rows = (await sql`
+    const rows = (await sql!`
       INSERT INTO media (id, url, pathname, content_type, kind, label, size_bytes)
       VALUES (${id}, ${input.url}, ${input.pathname}, ${input.contentType}, ${input.kind}, ${input.label}, ${input.sizeBytes})
       RETURNING *
@@ -58,27 +59,30 @@ export async function createMediaRecord(input: {
 
     return rowToMedia(rows[0]);
   } catch (err) {
+    markDbFailure();
     throw toWriteError(err, `Failed to save media record for "${input.label}"`);
   }
 }
 
 export async function getMediaById(id: string): Promise<MediaItem | undefined> {
-  if (!sql) return undefined;
+  if (!(await isDbAvailable())) return undefined;
   try {
-    const rows = (await sql`SELECT * FROM media WHERE id = ${id} LIMIT 1`) as unknown as MediaRow[];
+    const rows = (await sql!`SELECT * FROM media WHERE id = ${id} LIMIT 1`) as unknown as MediaRow[];
     if (rows.length === 0) return undefined;
     return rowToMedia(rows[0]);
   } catch (err) {
     console.error(`Failed to load media "${id}".`, err);
+    markDbFailure();
     return undefined;
   }
 }
 
 export async function deleteMediaRecord(id: string): Promise<void> {
-  if (!sql) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
+  if (!(await isDbAvailable())) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
   try {
-    await sql`DELETE FROM media WHERE id = ${id}`;
+    await sql!`DELETE FROM media WHERE id = ${id}`;
   } catch (err) {
+    markDbFailure();
     throw toWriteError(err, `Failed to delete media "${id}"`);
   }
 }

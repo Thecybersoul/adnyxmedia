@@ -1,4 +1,4 @@
-import { sql, toWriteError } from "@/lib/db/client";
+import { sql, toWriteError, isDbAvailable, markDbFailure } from "@/lib/db/client";
 import type { SiteContent } from "@/types/content";
 import {
   company as companyDefault,
@@ -28,14 +28,15 @@ export async function getContentSection<K extends keyof SiteContent>(
   key: K
 ): Promise<SiteContent[K]> {
   const fallback = contentDefaults[key];
-  if (!sql) return fallback;
+  if (!(await isDbAvailable())) return fallback;
 
   try {
-    const rows = await sql`SELECT value FROM content WHERE key = ${key} LIMIT 1`;
+    const rows = await sql!`SELECT value FROM content WHERE key = ${key} LIMIT 1`;
     if (rows.length === 0) return fallback;
     return rows[0].value as SiteContent[K];
   } catch (err) {
     console.error(`Failed to load content section "${key}", using fallback.`, err);
+    markDbFailure();
     return fallback;
   }
 }
@@ -44,15 +45,16 @@ export async function setContentSection<K extends keyof SiteContent>(
   key: K,
   value: SiteContent[K]
 ): Promise<void> {
-  if (!sql) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
+  if (!(await isDbAvailable())) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
 
   try {
-    await sql`
+    await sql!`
       INSERT INTO content (key, value, updated_at)
       VALUES (${key}, ${JSON.stringify(value)}::jsonb, now())
       ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now()
     `;
   } catch (err) {
+    markDbFailure();
     throw toWriteError(err, `Failed to save content section "${key}"`);
   }
 }

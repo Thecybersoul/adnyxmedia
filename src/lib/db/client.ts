@@ -34,6 +34,50 @@ export function isDbConfigured(): boolean {
   return sql !== null;
 }
 
+// A page render touches many independent data-access calls (content
+// sections, locations, media). React renders sibling Server Components'
+// data fetches concurrently rather than strictly one-at-a-time, so when the
+// database is configured and unreachable (wrong host, paused instance,
+// network block), several of those calls can race into their own
+// connection attempt before any of them has failed — and since the pool
+// above is capped at one connection, each attempt serializes behind the
+// last, so N racing calls still cost N * connect_timeout. A handful of
+// sections easily adds up to tens of seconds, well past the platform's
+// function execution limit, turning a "DB is down" situation into "the
+// whole site is down" instead of a graceful fallback.
+//
+// Fix both the raciness and the repeat cost: every caller shares a single
+// in-flight probe (so concurrent calls collapse into one real connection
+// attempt, not N), and a failed probe is remembered for a cooldown so
+// later calls — in this request and the next few — skip straight to the
+// fallback instead of trying again.
+const FAILURE_COOLDOWN_MS = 30_000;
+let lastFailureAt = 0;
+let inFlightProbe: Promise<boolean> | null = null;
+
+export function isDbAvailable(): Promise<boolean> {
+  if (!sql) return Promise.resolve(false);
+  if (Date.now() - lastFailureAt < FAILURE_COOLDOWN_MS) return Promise.resolve(false);
+  if (inFlightProbe) return inFlightProbe;
+
+  inFlightProbe = sql`SELECT 1`
+    .then(() => true)
+    .catch((err) => {
+      console.error("Database connection probe failed — falling back to static content.", err);
+      lastFailureAt = Date.now();
+      return false;
+    })
+    .finally(() => {
+      inFlightProbe = null;
+    });
+
+  return inFlightProbe;
+}
+
+export function markDbFailure(): void {
+  lastFailureAt = Date.now();
+}
+
 // Server Action return values (including thrown errors) get serialized by
 // React across the server/client boundary. The `postgres` package's error
 // objects don't always survive that cleanly, which surfaces to the browser

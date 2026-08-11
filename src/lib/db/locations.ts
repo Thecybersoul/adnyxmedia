@@ -1,4 +1,4 @@
-import { sql, toWriteError } from "@/lib/db/client";
+import { sql, toWriteError, isDbAvailable, markDbFailure } from "@/lib/db/client";
 import { locations as staticLocations } from "@/lib/data/locations";
 import type { InventoryLocation } from "@/types/location";
 
@@ -49,47 +49,50 @@ function rowToLocation(row: LocationRow): InventoryLocation {
 }
 
 export async function getLocations(): Promise<InventoryLocation[]> {
-  if (!sql) return staticLocations;
+  if (!(await isDbAvailable())) return staticLocations;
 
   try {
-    const rows = (await sql`
+    const rows = (await sql!`
       SELECT * FROM locations ORDER BY sort_order ASC, created_at ASC
     `) as unknown as LocationRow[];
     if (rows.length === 0) return staticLocations;
     return rows.map(rowToLocation);
   } catch (err) {
     console.error("Failed to load locations, using fallback.", err);
+    markDbFailure();
     return staticLocations;
   }
 }
 
 export async function getLocationBySlug(slug: string): Promise<InventoryLocation | undefined> {
-  if (!sql) return staticLocations.find((loc) => loc.slug === slug);
+  if (!(await isDbAvailable())) return staticLocations.find((loc) => loc.slug === slug);
 
   try {
-    const rows = (await sql`
+    const rows = (await sql!`
       SELECT * FROM locations WHERE slug = ${slug} LIMIT 1
     `) as unknown as LocationRow[];
     if (rows.length === 0) return undefined;
     return rowToLocation(rows[0]);
   } catch (err) {
     console.error(`Failed to load location "${slug}", using fallback.`, err);
+    markDbFailure();
     return staticLocations.find((loc) => loc.slug === slug);
   }
 }
 
 export async function getLocationById(id: string): Promise<InventoryLocation | undefined> {
   const fallback = staticLocations.find((loc) => loc.id === id);
-  if (!sql) return fallback;
+  if (!(await isDbAvailable())) return fallback;
 
   try {
-    const rows = (await sql`
+    const rows = (await sql!`
       SELECT * FROM locations WHERE id = ${id} LIMIT 1
     `) as unknown as LocationRow[];
     if (rows.length === 0) return fallback;
     return rowToLocation(rows[0]);
   } catch (err) {
     console.error(`Failed to load location "${id}", using fallback.`, err);
+    markDbFailure();
     return fallback;
   }
 }
@@ -97,11 +100,11 @@ export async function getLocationById(id: string): Promise<InventoryLocation | u
 export type LocationInput = Omit<InventoryLocation, "id"> & { id?: string };
 
 export async function createLocation(input: LocationInput): Promise<InventoryLocation> {
-  if (!sql) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
+  if (!(await isDbAvailable())) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
 
   const id = input.id || `loc-${crypto.randomUUID().slice(0, 8)}`;
   try {
-    const rows = (await sql`
+    const rows = (await sql!`
       INSERT INTO locations (
         id, slug, name, area, zone, type, format, width_ft, height_ft,
         resolution, illuminated, daily_impressions, landmark, availability,
@@ -118,15 +121,16 @@ export async function createLocation(input: LocationInput): Promise<InventoryLoc
 
     return rowToLocation(rows[0]);
   } catch (err) {
+    markDbFailure();
     throw toWriteError(err, `Failed to create location "${input.name}"`);
   }
 }
 
 export async function updateLocation(id: string, input: LocationInput): Promise<InventoryLocation> {
-  if (!sql) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
+  if (!(await isDbAvailable())) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
 
   try {
-    const rows = (await sql`
+    const rows = (await sql!`
       UPDATE locations SET
         slug = ${input.slug},
         name = ${input.name},
@@ -155,15 +159,17 @@ export async function updateLocation(id: string, input: LocationInput): Promise<
     return rowToLocation(rows[0]);
   } catch (err) {
     if (err instanceof Error && err.message === `Location "${id}" not found`) throw err;
+    markDbFailure();
     throw toWriteError(err, `Failed to update location "${id}"`);
   }
 }
 
 export async function deleteLocation(id: string): Promise<void> {
-  if (!sql) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
+  if (!(await isDbAvailable())) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
   try {
-    await sql`DELETE FROM locations WHERE id = ${id}`;
+    await sql!`DELETE FROM locations WHERE id = ${id}`;
   } catch (err) {
+    markDbFailure();
     throw toWriteError(err, `Failed to delete location "${id}"`);
   }
 }
