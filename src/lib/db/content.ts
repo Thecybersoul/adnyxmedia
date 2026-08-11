@@ -24,6 +24,28 @@ export const contentDefaults: SiteContent = {
   timeline: timelineDefault,
 };
 
+// A handful of rows in the content table were written double-JSON-encoded
+// at some point (the jsonb column holds a JSON *string* like
+// `"{\"badge\":...}"` instead of the object itself) — some past write path
+// stringified the value before handing it to setContentSection, which
+// stringifies again. postgres.js then decodes that jsonb value into a
+// plain JS string rather than the object/array every page component
+// expects, and e.g. `stats.map(...)` on a string throws and takes the
+// whole page down. Rather than trust every row was written correctly,
+// unwrap however many layers of string-encoding we actually find.
+function normalizeContentValue<T>(value: unknown, fallback: T): T {
+  let current = value;
+  for (let attempts = 0; attempts < 3 && typeof current === "string"; attempts++) {
+    try {
+      current = JSON.parse(current);
+    } catch (err) {
+      console.error("Content value looked double-encoded but failed to parse — using fallback.", err);
+      return fallback;
+    }
+  }
+  return current as T;
+}
+
 export async function getContentSection<K extends keyof SiteContent>(
   key: K
 ): Promise<SiteContent[K]> {
@@ -33,7 +55,7 @@ export async function getContentSection<K extends keyof SiteContent>(
   try {
     const rows = await sql!`SELECT value FROM content WHERE key = ${key} LIMIT 1`;
     if (rows.length === 0) return fallback;
-    return rows[0].value as SiteContent[K];
+    return normalizeContentValue(rows[0].value, fallback);
   } catch (err) {
     console.error(`Failed to load content section "${key}", using fallback.`, err);
     markDbFailure();
