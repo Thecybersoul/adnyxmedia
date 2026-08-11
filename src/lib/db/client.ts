@@ -13,9 +13,22 @@ const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
 // if the database is unreachable or its connection limit is exhausted, so
 // callers' try/catch fallback logic actually gets a chance to run within
 // the platform's execution time budget.
-export const sql = connectionString
-  ? postgres(connectionString, { prepare: false, max: 1, idle_timeout: 20, connect_timeout: 5 })
-  : null;
+// postgres() parses the connection string synchronously and throws on
+// anything malformed — that happens at module import time, which (since
+// this module is imported by nearly every page) would take down the
+// entire site, not just DB-dependent parts of it, over something as small
+// as a stray character in an env var. Never let that escape.
+function createClient() {
+  if (!connectionString) return null;
+  try {
+    return postgres(connectionString, { prepare: false, max: 1, idle_timeout: 20, connect_timeout: 5 });
+  } catch (err) {
+    console.error("DATABASE_URL / POSTGRES_URL is malformed — running without a database.", err);
+    return null;
+  }
+}
+
+export const sql = createClient();
 
 export function isDbConfigured(): boolean {
   return sql !== null;
