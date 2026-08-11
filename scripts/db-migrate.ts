@@ -1,32 +1,29 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { Client } from "@neondatabase/serverless";
+import postgres from "postgres";
 
 async function main() {
-  const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+  // Prefer a direct (non-pooled) connection for DDL — poolers running in
+  // transaction mode (Supabase's pgbouncer, Neon's pooled endpoint) can be
+  // unreliable for schema changes.
+  const connectionString =
+    process.env.POSTGRES_URL_NON_POOLING || process.env.DATABASE_URL || process.env.POSTGRES_URL;
   if (!connectionString) {
-    console.error("Missing DATABASE_URL (or POSTGRES_URL) env var. Set it before running db:migrate.");
+    console.error(
+      "Missing POSTGRES_URL_NON_POOLING (or DATABASE_URL / POSTGRES_URL) env var. Set it before running db:migrate."
+    );
     process.exit(1);
   }
 
   const schemaPath = join(process.cwd(), "src/lib/db/schema.sql");
   const schema = readFileSync(schemaPath, "utf8");
-  const statements = schema
-    .split(";")
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0 && !s.startsWith("--"));
 
-  const client = new Client(connectionString);
-  await client.connect();
-
+  const sql = postgres(connectionString, { prepare: false, max: 1 });
   try {
-    for (const statement of statements) {
-      console.log(`Running: ${statement.slice(0, 60).replace(/\s+/g, " ")}...`);
-      await client.query(statement);
-    }
-    console.log(`Migration complete — ${statements.length} statements applied.`);
+    await sql.unsafe(schema);
+    console.log("Migration complete — schema applied.");
   } finally {
-    await client.end();
+    await sql.end();
   }
 }
 

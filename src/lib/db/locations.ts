@@ -102,7 +102,7 @@ export async function createLocation(input: LocationInput): Promise<InventoryLoc
     ) VALUES (
       ${id}, ${input.slug}, ${input.name}, ${input.area}, ${input.zone}, ${input.type}, ${input.format},
       ${input.widthFt}, ${input.heightFt}, ${input.resolution ?? null}, ${input.illuminated},
-      ${input.dailyImpressions}, ${input.landmark}, ${input.availability},
+      ${input.dailyImpressions ?? 0}, ${input.landmark}, ${input.availability},
       ${JSON.stringify(input.highlights)}::jsonb, ${JSON.stringify(input.hue)}::jsonb,
       ${JSON.stringify(input.position)}::jsonb, ${input.imageUrl ?? null}, ${input.videoUrl ?? null}
     )
@@ -127,7 +127,7 @@ export async function updateLocation(id: string, input: LocationInput): Promise<
       height_ft = ${input.heightFt},
       resolution = ${input.resolution ?? null},
       illuminated = ${input.illuminated},
-      daily_impressions = ${input.dailyImpressions},
+      daily_impressions = ${input.dailyImpressions ?? 0},
       landmark = ${input.landmark},
       availability = ${input.availability},
       highlights = ${JSON.stringify(input.highlights)}::jsonb,

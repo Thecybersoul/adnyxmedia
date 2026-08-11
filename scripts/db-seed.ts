@@ -28,7 +28,7 @@ async function main() {
       ) VALUES (
         ${loc.id}, ${loc.slug}, ${loc.name}, ${loc.area}, ${loc.zone}, ${loc.type}, ${loc.format},
         ${loc.widthFt}, ${loc.heightFt}, ${loc.resolution ?? null}, ${loc.illuminated},
-        ${loc.dailyImpressions}, ${loc.landmark}, ${loc.availability},
+        ${loc.dailyImpressions ?? 0}, ${loc.landmark}, ${loc.availability},
         ${JSON.stringify(loc.highlights)}::jsonb, ${JSON.stringify(loc.hue)}::jsonb,
         ${JSON.stringify(loc.position)}::jsonb, ${loc.imageUrl ?? null}, ${loc.videoUrl ?? null}, ${index}
       )
