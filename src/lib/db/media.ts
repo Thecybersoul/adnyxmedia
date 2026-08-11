@@ -27,10 +27,15 @@ function rowToMedia(row: MediaRow): MediaItem {
 
 export async function listMedia(): Promise<MediaItem[]> {
   if (!sql) return [];
-  const rows = (await sql`
-    SELECT * FROM media ORDER BY created_at DESC
-  `) as unknown as MediaRow[];
-  return rows.map(rowToMedia);
+  try {
+    const rows = (await sql`
+      SELECT * FROM media ORDER BY created_at DESC
+    `) as unknown as MediaRow[];
+    return rows.map(rowToMedia);
+  } catch (err) {
+    console.error("Failed to load media library.", err);
+    return [];
+  }
 }
 
 export async function createMediaRecord(input: {
@@ -55,9 +60,14 @@ export async function createMediaRecord(input: {
 
 export async function getMediaById(id: string): Promise<MediaItem | undefined> {
   if (!sql) return undefined;
-  const rows = (await sql`SELECT * FROM media WHERE id = ${id} LIMIT 1`) as unknown as MediaRow[];
-  if (rows.length === 0) return undefined;
-  return rowToMedia(rows[0]);
+  try {
+    const rows = (await sql`SELECT * FROM media WHERE id = ${id} LIMIT 1`) as unknown as MediaRow[];
+    if (rows.length === 0) return undefined;
+    return rowToMedia(rows[0]);
+  } catch (err) {
+    console.error(`Failed to load media "${id}".`, err);
+    return undefined;
+  }
 }
 
 export async function deleteMediaRecord(id: string): Promise<void> {

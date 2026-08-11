@@ -79,13 +79,19 @@ export async function getLocationBySlug(slug: string): Promise<InventoryLocation
 }
 
 export async function getLocationById(id: string): Promise<InventoryLocation | undefined> {
-  if (!sql) return staticLocations.find((loc) => loc.id === id);
+  const fallback = staticLocations.find((loc) => loc.id === id);
+  if (!sql) return fallback;
 
-  const rows = (await sql`
-    SELECT * FROM locations WHERE id = ${id} LIMIT 1
-  `) as unknown as LocationRow[];
-  if (rows.length === 0) return undefined;
-  return rowToLocation(rows[0]);
+  try {
+    const rows = (await sql`
+      SELECT * FROM locations WHERE id = ${id} LIMIT 1
+    `) as unknown as LocationRow[];
+    if (rows.length === 0) return fallback;
+    return rowToLocation(rows[0]);
+  } catch (err) {
+    console.error(`Failed to load location "${id}", using fallback.`, err);
+    return fallback;
+  }
 }
 
 export type LocationInput = Omit<InventoryLocation, "id"> & { id?: string };
