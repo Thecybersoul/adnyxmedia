@@ -1,10 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { upload } from "@vercel/blob/client";
 import { Loader2, Upload } from "lucide-react";
 import { ButtonEl } from "@/components/ui/button";
 import { createMediaRecordAction } from "@/app/admin/(dashboard)/media/actions";
+import { supabaseBrowser } from "@/lib/storage/supabase-browser";
+import { STORAGE_BUCKET } from "@/lib/storage/constants";
 import type { MediaItem } from "@/types/media";
 
 export function UploadButton({
@@ -25,17 +26,29 @@ export function UploadButton({
     setError(null);
 
     try {
-      const blob = await upload(file.name, file, {
-        access: "public",
-        handleUploadUrl: "/api/admin/blob/upload",
+      if (!supabaseBrowser) {
+        throw new Error("Media storage isn't configured yet.");
+      }
+
+      const signRes = await fetch("/api/admin/storage/sign-upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filename: file.name }),
       });
+      const signData = await signRes.json();
+      if (!signRes.ok) throw new Error(signData.error || "Failed to prepare upload.");
+
+      const { error: uploadError } = await supabaseBrowser.storage
+        .from(STORAGE_BUCKET)
+        .uploadToSignedUrl(signData.path, signData.token, file);
+      if (uploadError) throw uploadError;
 
       const kind = file.type.startsWith("video") ? "video" : file.type.startsWith("image") ? "image" : "other";
 
       const media = await createMediaRecordAction({
-        url: blob.url,
-        pathname: blob.pathname,
-        contentType: blob.contentType ?? file.type,
+        url: signData.publicUrl,
+        pathname: signData.path,
+        contentType: file.type,
         kind,
         label: file.name,
         sizeBytes: file.size,

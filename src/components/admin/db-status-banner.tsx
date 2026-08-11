@@ -1,11 +1,12 @@
 import { AlertTriangle } from "lucide-react";
 import { isDbConfigured } from "@/lib/db/client";
+import { isStorageConfigured } from "@/lib/storage/supabase";
 
 export function DbStatusBanner() {
   const dbReady = isDbConfigured();
-  const blobReady = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  const storageReady = isStorageConfigured();
 
-  if (dbReady && blobReady) return null;
+  if (dbReady && storageReady) return null;
 
   return (
     <div className="flex items-start gap-3 border-b border-amber/25 bg-amber/10 px-4 py-3 text-sm text-amber sm:px-8">
@@ -19,11 +20,14 @@ export function DbStatusBanner() {
             and <code className="rounded bg-black/20 px-1 py-0.5">npm run db:seed</code>.
           </p>
         )}
-        {dbReady && !blobReady && (
+        {dbReady && !storageReady && (
           <p>
             No media storage connected — image/video uploads are disabled. Set{" "}
-            <code className="rounded bg-black/20 px-1 py-0.5">BLOB_READ_WRITE_TOKEN</code> (from a Vercel Blob store)
-            to enable the media library.
+            <code className="rounded bg-black/20 px-1 py-0.5">NEXT_PUBLIC_SUPABASE_URL</code>,{" "}
+            <code className="rounded bg-black/20 px-1 py-0.5">NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, and{" "}
+            <code className="rounded bg-black/20 px-1 py-0.5">SUPABASE_SERVICE_ROLE_KEY</code> (from your Supabase
+            project&apos;s Settings → API page) to enable the media library — the storage bucket is created
+            automatically.
           </p>
         )}
       </div>

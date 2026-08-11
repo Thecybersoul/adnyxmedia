@@ -12,7 +12,7 @@
     "generate:placeholders": "node scripts/generate-placeholder-images.js"
   },
   "dependencies": {
-    "@vercel/blob": "^2.7.0",
+    "@supabase/supabase-js": "^2.112.3",
     "clsx": "^2.1.1",
     "framer-motion": "^13.0.0",
     "lucide-react": "^1.31.0",

@@ -1,8 +1,9 @@
 "use server";
 
-import { del } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { createMediaRecord, deleteMediaRecord, getMediaById } from "@/lib/db/media";
+import { supabaseAdmin } from "@/lib/storage/supabase";
+import { STORAGE_BUCKET } from "@/lib/storage/constants";
 import type { AssetKind, MediaItem } from "@/types/media";
 
 export async function createMediaRecordAction(input: {
@@ -20,11 +21,11 @@ export async function createMediaRecordAction(input: {
 
 export async function deleteMediaAction(id: string): Promise<void> {
   const item = await getMediaById(id);
-  if (item) {
+  if (item && supabaseAdmin) {
     try {
-      await del(item.url);
+      await supabaseAdmin.storage.from(STORAGE_BUCKET).remove([item.pathname]);
     } catch (err) {
-      console.error(`Failed to delete blob for media "${id}"`, err);
+      console.error(`Failed to delete storage object for media "${id}"`, err);
     }
   }
   await deleteMediaRecord(id);
