@@ -1,4 +1,4 @@
-import { sql } from "@/lib/db/client";
+import { sql, toWriteError } from "@/lib/db/client";
 import type { SiteContent } from "@/types/content";
 import {
   company as companyDefault,
@@ -46,9 +46,13 @@ export async function setContentSection<K extends keyof SiteContent>(
 ): Promise<void> {
   if (!sql) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
 
-  await sql`
-    INSERT INTO content (key, value, updated_at)
-    VALUES (${key}, ${JSON.stringify(value)}::jsonb, now())
-    ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now()
-  `;
+  try {
+    await sql`
+      INSERT INTO content (key, value, updated_at)
+      VALUES (${key}, ${JSON.stringify(value)}::jsonb, now())
+      ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now()
+    `;
+  } catch (err) {
+    throw toWriteError(err, `Failed to save content section "${key}"`);
+  }
 }

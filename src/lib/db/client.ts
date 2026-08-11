@@ -20,3 +20,15 @@ export const sql = connectionString
 export function isDbConfigured(): boolean {
   return sql !== null;
 }
+
+// Server Action return values (including thrown errors) get serialized by
+// React across the server/client boundary. The `postgres` package's error
+// objects don't always survive that cleanly, which surfaces to the browser
+// as an opaque React internal error instead of the actual failure reason.
+// Write paths should catch driver errors and re-throw through this so the
+// client always gets a plain, readable, serializable Error.
+export function toWriteError(err: unknown, context: string): Error {
+  console.error(context, err);
+  const message = err instanceof Error ? err.message : String(err);
+  return new Error(`${context}: ${message}`);
+}

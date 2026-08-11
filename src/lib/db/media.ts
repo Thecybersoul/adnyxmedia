@@ -1,4 +1,4 @@
-import { sql } from "@/lib/db/client";
+import { sql, toWriteError } from "@/lib/db/client";
 import type { AssetKind, MediaItem } from "@/types/media";
 
 interface MediaRow {
@@ -49,13 +49,17 @@ export async function createMediaRecord(input: {
   if (!sql) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
 
   const id = crypto.randomUUID();
-  const rows = (await sql`
-    INSERT INTO media (id, url, pathname, content_type, kind, label, size_bytes)
-    VALUES (${id}, ${input.url}, ${input.pathname}, ${input.contentType}, ${input.kind}, ${input.label}, ${input.sizeBytes})
-    RETURNING *
-  `) as unknown as MediaRow[];
+  try {
+    const rows = (await sql`
+      INSERT INTO media (id, url, pathname, content_type, kind, label, size_bytes)
+      VALUES (${id}, ${input.url}, ${input.pathname}, ${input.contentType}, ${input.kind}, ${input.label}, ${input.sizeBytes})
+      RETURNING *
+    `) as unknown as MediaRow[];
 
-  return rowToMedia(rows[0]);
+    return rowToMedia(rows[0]);
+  } catch (err) {
+    throw toWriteError(err, `Failed to save media record for "${input.label}"`);
+  }
 }
 
 export async function getMediaById(id: string): Promise<MediaItem | undefined> {
@@ -72,5 +76,9 @@ export async function getMediaById(id: string): Promise<MediaItem | undefined> {
 
 export async function deleteMediaRecord(id: string): Promise<void> {
   if (!sql) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
-  await sql`DELETE FROM media WHERE id = ${id}`;
+  try {
+    await sql`DELETE FROM media WHERE id = ${id}`;
+  } catch (err) {
+    throw toWriteError(err, `Failed to delete media "${id}"`);
+  }
 }
