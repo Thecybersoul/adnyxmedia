@@ -31,14 +31,20 @@ export function Hero({ hero }: { hero: HeroContent }) {
           read as part of the same dark surface, pinned to the bottom of
           the screen rather than floating in the middle.
 
-          min-h-screen (100vh, not dvh): dvh tracks the mobile browser's
-          real-time viewport, which changes as the address bar
-          collapses/expands during scroll — that made this section (and
-          the flex-1 gap below the video) visibly stretch and snap while
-          scrolling. 100vh is computed once and doesn't recalculate on
-          scroll, so it stays stable. */}
-      <section className="relative flex min-h-screen flex-col overflow-hidden bg-ink pt-16 lg:hidden">
-        <div aria-hidden className="relative w-full shrink-0 aspect-[4/5] overflow-hidden">
+          min-h-[100svh]: dvh animated (recalculates live as the address
+          bar collapses on scroll); 100vh is static but pinned to the
+          "large" viewport baseline, so it doesn't account for other
+          dynamic OS chrome (e.g. an active-call banner) and can get
+          content pushed below the fold on load. svh is fixed to the
+          guaranteed-smallest possible visible area, so content is never
+          cut off regardless of what chrome is showing, and it doesn't
+          recalculate mid-scroll either. */}
+      <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-ink pt-16 lg:hidden">
+        <div
+          aria-hidden
+          className="relative w-full shrink-0 overflow-hidden"
+          style={{ height: "min(125vw, calc(100svh - 64px - 280px))" }}
+        >
           <video
             className="h-full w-full object-cover"
             src={DEFAULT_MOBILE_VIDEO_SRC}
@@ -60,12 +66,12 @@ export function Hero({ hero }: { hero: HeroContent }) {
           </motion.div>
         </div>
 
-        <div className="relative flex flex-1 flex-col items-center justify-end px-6 pb-7 pt-4">
+        <div className="relative flex flex-1 flex-col items-center justify-end px-6 pb-6 pt-3">
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center font-display text-3xl font-medium leading-[1.1] tracking-tight text-mist"
+            className="text-center font-display text-[1.75rem] font-medium leading-[1.1] tracking-tight text-mist"
           >
             {hero.headline}
             <br />
@@ -76,7 +82,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-2.5 max-w-xs text-center text-sm leading-relaxed text-mist-dim"
+            className="mt-2 max-w-xs text-center text-sm leading-relaxed text-mist-dim"
           >
             {hero.subheadline}
           </motion.p>
@@ -85,7 +91,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-5 flex w-full flex-col items-center gap-2.5"
+            className="mt-4 flex w-full flex-col items-center gap-2.5"
           >
             <Button href={hero.primaryCtaHref} size="md" className="w-full justify-center">
               {hero.primaryCtaLabel}
@@ -106,11 +112,11 @@ export function Hero({ hero }: { hero: HeroContent }) {
       {/* Desktop: same pattern — video flush under the nav at its native
           16:9, leftover height becomes a solid dark panel with the
           headline/CTAs pinned to the bottom of the screen. */}
-      <section className="relative hidden overflow-hidden bg-ink lg:flex lg:min-h-screen lg:flex-col lg:pt-[72px]">
+      <section className="relative hidden overflow-hidden bg-ink lg:flex lg:min-h-[100svh] lg:flex-col lg:pt-[72px]">
         <div
           aria-hidden
           className="relative w-full shrink-0 overflow-hidden"
-          style={{ height: "min(56.25vw, calc(100vh - 72px - 280px))" }}
+          style={{ height: "min(56.25vw, calc(100svh - 72px - 280px))" }}
         >
           <video
             className="h-full w-full object-cover"
