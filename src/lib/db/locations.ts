@@ -129,36 +129,49 @@ export async function createLocation(input: LocationInput): Promise<InventoryLoc
 export async function updateLocation(id: string, input: LocationInput): Promise<InventoryLocation> {
   if (!(await isDbAvailable())) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
 
+  // Upsert rather than a plain UPDATE: the row being "edited" here may only
+  // ever have existed in the static fallback data (e.g. the database was
+  // never seeded, or this id predates the row actually being written) — in
+  // that case a plain UPDATE matches nothing and silently fails. Editing
+  // fallback content should just create the row with the edited values.
   try {
     const rows = (await sql!`
-      UPDATE locations SET
-        slug = ${input.slug},
-        name = ${input.name},
-        area = ${input.area},
-        zone = ${input.zone},
-        type = ${input.type},
-        format = ${input.format},
-        width_ft = ${input.widthFt},
-        height_ft = ${input.heightFt},
-        resolution = ${input.resolution ?? null},
-        illuminated = ${input.illuminated},
-        daily_impressions = ${input.dailyImpressions ?? 0},
-        landmark = ${input.landmark},
-        availability = ${input.availability},
-        highlights = ${JSON.stringify(input.highlights)}::jsonb,
-        hue = ${JSON.stringify(input.hue)}::jsonb,
-        position = ${JSON.stringify(input.position)}::jsonb,
-        image_url = ${input.imageUrl ?? null},
-        video_url = ${input.videoUrl ?? null},
+      INSERT INTO locations (
+        id, slug, name, area, zone, type, format, width_ft, height_ft,
+        resolution, illuminated, daily_impressions, landmark, availability,
+        highlights, hue, position, image_url, video_url
+      ) VALUES (
+        ${id}, ${input.slug}, ${input.name}, ${input.area}, ${input.zone}, ${input.type}, ${input.format},
+        ${input.widthFt}, ${input.heightFt}, ${input.resolution ?? null}, ${input.illuminated},
+        ${input.dailyImpressions ?? 0}, ${input.landmark}, ${input.availability},
+        ${JSON.stringify(input.highlights)}::jsonb, ${JSON.stringify(input.hue)}::jsonb,
+        ${JSON.stringify(input.position)}::jsonb, ${input.imageUrl ?? null}, ${input.videoUrl ?? null}
+      )
+      ON CONFLICT (id) DO UPDATE SET
+        slug = EXCLUDED.slug,
+        name = EXCLUDED.name,
+        area = EXCLUDED.area,
+        zone = EXCLUDED.zone,
+        type = EXCLUDED.type,
+        format = EXCLUDED.format,
+        width_ft = EXCLUDED.width_ft,
+        height_ft = EXCLUDED.height_ft,
+        resolution = EXCLUDED.resolution,
+        illuminated = EXCLUDED.illuminated,
+        daily_impressions = EXCLUDED.daily_impressions,
+        landmark = EXCLUDED.landmark,
+        availability = EXCLUDED.availability,
+        highlights = EXCLUDED.highlights,
+        hue = EXCLUDED.hue,
+        position = EXCLUDED.position,
+        image_url = EXCLUDED.image_url,
+        video_url = EXCLUDED.video_url,
         updated_at = now()
-      WHERE id = ${id}
       RETURNING *
     `) as unknown as LocationRow[];
 
-    if (rows.length === 0) throw new Error(`Location "${id}" not found`);
     return rowToLocation(rows[0]);
   } catch (err) {
-    if (err instanceof Error && err.message === `Location "${id}" not found`) throw err;
     markDbFailure();
     throw toWriteError(err, `Failed to update location "${id}"`);
   }
