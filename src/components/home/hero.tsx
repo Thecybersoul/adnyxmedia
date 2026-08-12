@@ -28,20 +28,18 @@ export function Hero({ hero }: { hero: HeroContent }) {
 
   return (
     <>
-      {/* Mobile: this footage was shot and cropped specifically for a phone
-          screen, with a clear band of sky at the top — so the video plays
-          truly full-bleed and the headline sits directly in that clear
-          band, seamlessly on top of it, with the billboard fully visible
-          below. CTAs anchor near the bottom, over the road, which stays
-          just as clear through the whole loop. */}
-      <section className="relative flex min-h-dvh flex-col overflow-hidden bg-ink lg:hidden">
-        <div aria-hidden className="absolute inset-0">
+      {/* Mobile: video plays in its own band at its exact native aspect
+          ratio (4:5, matching the crop as provided) — no further cropping
+          or stretching. Text sits in a solid panel below it, same pattern
+          as desktop. */}
+      <section className="relative flex min-h-dvh flex-col overflow-hidden bg-ink pt-16 lg:hidden">
+        <div aria-hidden className="relative aspect-[4/5] w-full overflow-hidden">
           {hasImage ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={hero.mediaUrl} alt="" className="h-full w-full object-cover object-[72%_center]" />
+            <img src={hero.mediaUrl} alt="" className="h-full w-full object-cover" />
           ) : (
             <video
-              className="h-full w-full object-cover object-[72%_center]"
+              className="h-full w-full object-cover"
               src={mobileVideoSrc}
               autoPlay
               muted
@@ -50,24 +48,24 @@ export function Hero({ hero }: { hero: HeroContent }) {
             />
           )}
           <Noise />
-          <div className="absolute inset-x-0 top-0 h-[46%] bg-gradient-to-b from-ink/80 via-ink/30 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink/85 to-transparent" />
-        </div>
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ink to-transparent" />
 
-        <div className="relative flex flex-1 flex-col px-6 pt-20">
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="absolute left-4 top-4"
           >
             <Badge label={hero.badge} />
           </motion.div>
+        </div>
 
+        <Container className="relative flex flex-1 flex-col items-center justify-end pb-10 pt-6">
           <motion.h1
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-4 max-w-xs font-display text-3xl font-medium leading-[1.08] tracking-tight text-mist"
+            className="mx-auto max-w-sm text-center font-display text-3xl font-medium leading-[1.08] tracking-tight text-mist"
           >
             {hero.headline}
             <br />
@@ -75,34 +73,34 @@ export function Hero({ hero }: { hero: HeroContent }) {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-3 max-w-[15rem] text-sm leading-relaxed text-mist-dim"
+            className="mx-auto mt-4 max-w-xs text-center text-sm leading-relaxed text-mist-dim"
           >
             {hero.subheadline}
           </motion.p>
-        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
-          className="relative flex flex-col gap-3 px-6 pb-10"
-        >
-          <Button href={hero.primaryCtaHref} size="lg" className="w-full justify-center">
-            {hero.primaryCtaLabel}
-          </Button>
-          <Button
-            href={hero.secondaryCtaHref}
-            size="lg"
-            variant="secondary"
-            showArrow={false}
-            className="w-full justify-center border-white/25 bg-white/5 backdrop-blur-md"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-7 flex w-full flex-col items-center gap-3"
           >
-            {hero.secondaryCtaLabel}
-          </Button>
-        </motion.div>
+            <Button href={hero.primaryCtaHref} size="lg" className="w-full justify-center">
+              {hero.primaryCtaLabel}
+            </Button>
+            <Button
+              href={hero.secondaryCtaHref}
+              size="lg"
+              variant="secondary"
+              showArrow={false}
+              className="w-full justify-center border-white/25 bg-white/5 backdrop-blur-md"
+            >
+              {hero.secondaryCtaLabel}
+            </Button>
+          </motion.div>
+        </Container>
       </section>
 
       {/* Desktop: the source footage orbits the billboard, so it stays
