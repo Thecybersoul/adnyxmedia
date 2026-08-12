@@ -24,6 +24,40 @@ interface LocationRow {
   video_url: string | null;
 }
 
+const DEFAULT_HUE: [string, string] = ["#E65050", "#7A2020"];
+const DEFAULT_POSITION = { x: 50, y: 50 };
+
+// jsonb columns come back pre-parsed by the driver when they're well-formed,
+// but a row written from outside the normal write path (a manual edit, a
+// partially-failed save, a migration) can leave one of these as the wrong
+// shape — a string instead of an array, a null, etc. The public location
+// pages call array/index methods on these directly, so a bad shape here
+// crashes the whole page render rather than just looking wrong. Coerce to a
+// safe shape instead of trusting the row.
+function coerceHighlights(value: unknown): string[] {
+  if (Array.isArray(value)) return value.filter((v): v is string => typeof v === "string");
+  return [];
+}
+
+function coerceHue(value: unknown): [string, string] {
+  if (Array.isArray(value) && typeof value[0] === "string" && typeof value[1] === "string") {
+    return [value[0], value[1]];
+  }
+  return DEFAULT_HUE;
+}
+
+function coercePosition(value: unknown): { x: number; y: number } {
+  if (
+    value &&
+    typeof value === "object" &&
+    typeof (value as { x?: unknown }).x === "number" &&
+    typeof (value as { y?: unknown }).y === "number"
+  ) {
+    return value as { x: number; y: number };
+  }
+  return DEFAULT_POSITION;
+}
+
 function rowToLocation(row: LocationRow): InventoryLocation {
   return {
     id: row.id,
@@ -40,9 +74,9 @@ function rowToLocation(row: LocationRow): InventoryLocation {
     dailyImpressions: row.daily_impressions,
     landmark: row.landmark,
     availability: row.availability as InventoryLocation["availability"],
-    highlights: row.highlights,
-    hue: row.hue,
-    position: row.position,
+    highlights: coerceHighlights(row.highlights),
+    hue: coerceHue(row.hue),
+    position: coercePosition(row.position),
     imageUrl: row.image_url ?? undefined,
     videoUrl: row.video_url ?? undefined,
   };

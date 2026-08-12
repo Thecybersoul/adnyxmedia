@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { isDbConfigured, isDbAvailable, sql } from "@/lib/db/client";
 import { getContentSection, contentDefaults } from "@/lib/db/content";
-import { getLocations, getLocationById } from "@/lib/db/locations";
+import { getLocations, getLocationById, getLocationBySlug } from "@/lib/db/locations";
 import type { SiteContent } from "@/types/content";
 
 // Exercises the exact DB-backed calls the public pages make, reporting
@@ -73,6 +73,33 @@ export async function GET() {
     result.editPageCheck = edits;
   } catch (err) {
     result.editPageCheckError = err instanceof Error ? err.message : String(err);
+  }
+
+  // Exercise the exact call + field access the PUBLIC /locations/[slug] page
+  // makes for every location — this is the one the admin-focused checks
+  // above don't cover, since that page fetches by slug, not id.
+  try {
+    const locations = await getLocations();
+    const slugChecks: Record<string, unknown> = {};
+    for (const loc of locations) {
+      try {
+        const full = await getLocationBySlug(loc.slug);
+        if (!full) {
+          slugChecks[loc.slug] = { ok: false, error: "getLocationBySlug returned undefined — page would 404" };
+          continue;
+        }
+        // Touch every field the detail page actually renders/calls methods on.
+        const highlightsRendered = full.highlights.map((h) => h).length;
+        const hueRendered = `${full.hue[0]},${full.hue[1]}`;
+        const dims = `${full.widthFt}x${full.heightFt}`;
+        slugChecks[loc.slug] = { ok: true, id: full.id, highlightsRendered, hueRendered, dims };
+      } catch (err) {
+        slugChecks[loc.slug] = { ok: false, error: err instanceof Error ? err.message : String(err) };
+      }
+    }
+    result.slugPageCheck = slugChecks;
+  } catch (err) {
+    result.slugPageCheckError = err instanceof Error ? err.message : String(err);
   }
 
   result.totalMs = Date.now() - startedAt;
