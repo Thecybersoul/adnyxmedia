@@ -31,8 +31,8 @@ export function Hero({ hero }: { hero: HeroContent }) {
           fade/content zone is sized generously (~40%, not a tight 20%)
           and kept to headline + CTAs only, no subheadline, to stay clear
           of it at every point in the loop. */}
-      <section className="relative overflow-hidden bg-ink lg:hidden">
-        <div aria-hidden className="relative aspect-[4/5] w-full overflow-hidden">
+      <section className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-ink pt-16 lg:hidden">
+        <div aria-hidden className="relative w-full shrink-0 aspect-[4/5] overflow-hidden">
           <video
             className="h-full w-full object-cover"
             src={DEFAULT_MOBILE_VIDEO_SRC}
@@ -89,8 +89,8 @@ export function Hero({ hero }: { hero: HeroContent }) {
       {/* Desktop: shot and framed specifically so the bottom ~40% is clear
           flyover road through the whole loop — the headline sits directly
           in that band, seamlessly on the footage. */}
-      <section className="relative hidden overflow-hidden bg-ink lg:block">
-        <div aria-hidden className="relative aspect-video w-full overflow-hidden">
+      <section className="relative hidden overflow-hidden bg-ink lg:flex lg:min-h-dvh lg:flex-col lg:items-center lg:justify-center lg:pt-[72px]">
+        <div aria-hidden className="relative w-full shrink-0 aspect-video overflow-hidden">
           <video
             className="h-full w-full object-cover"
             src={DEFAULT_VIDEO_SRC}
