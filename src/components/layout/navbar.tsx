@@ -31,10 +31,8 @@ export function Navbar({ companyName }: { companyName: string }) {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled || open
-          ? "bg-ink/80 backdrop-blur-xl border-b border-white/10"
-          : "bg-transparent border-b border-transparent"
+        "fixed inset-x-0 top-0 z-50 border-b border-white/10 backdrop-blur-xl transition-all duration-300",
+        scrolled || open ? "bg-ink/90" : "bg-ink/60"
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">

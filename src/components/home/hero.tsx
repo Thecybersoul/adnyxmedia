@@ -11,7 +11,7 @@ const DEFAULT_MOBILE_VIDEO_SRC = "/videos/hero-billboard-mobile.mp4";
 
 function Badge({ label }: { label: string }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-4 py-1.5 text-xs font-medium text-mist backdrop-blur-md">
+    <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/60 px-4 py-1.5 text-xs font-medium text-mist backdrop-blur-md">
       <span className="relative flex size-1.5">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-75" />
         <span className="relative inline-flex size-1.5 rounded-full bg-signal" />
@@ -42,7 +42,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
             playsInline
           />
           <Noise />
-          <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-ink from-15% via-ink/75 via-55% to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-[46%] bg-gradient-to-t from-ink from-25% via-ink/90 via-65% to-transparent" />
 
           <motion.div
             initial={{ opacity: 0, y: -8 }}
@@ -100,7 +100,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
             playsInline
           />
           <Noise />
-          <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-ink from-10% via-ink/65 via-50% to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-[46%] bg-gradient-to-t from-ink from-20% via-ink/90 via-65% to-transparent" />
 
           <motion.div
             initial={{ opacity: 0, y: -8 }}
