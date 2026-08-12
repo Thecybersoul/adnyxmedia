@@ -13,7 +13,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
   const videoSrc = hero.mediaType === "video" && hero.mediaUrl ? hero.mediaUrl : DEFAULT_VIDEO_SRC;
 
   return (
-    <section className="relative overflow-hidden bg-ink pt-16 lg:pt-[72px]">
+    <section className="relative flex min-h-dvh flex-col overflow-hidden bg-ink pt-16 lg:pt-[72px]">
       {/* The footage is the point, so it plays full-bleed and completely
           unobstructed in its own band — no text ever sits on top of it.
           aspect-video matches the source's native 16:9, so nothing is
@@ -51,7 +51,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
         </motion.div>
       </div>
 
-      <Container className="relative flex flex-col items-center py-10 sm:py-12 lg:py-16">
+      <Container className="relative flex flex-1 flex-col items-center justify-end pb-14 pt-8 sm:pb-16 lg:pb-20">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

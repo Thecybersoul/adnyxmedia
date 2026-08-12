@@ -31,9 +31,9 @@ export const company: CompanyContent = {
 export const heroDefault: HeroContent = {
   badge: "5 live sites across Bangalore",
   headline: "Your brand,",
-  headlineAccent: "impossible to miss.",
+  headlineAccent: "impossible to miss",
   subheadline:
-    "ADNYX owns and operates a premium billboard network at Bangalore's busiest junctions — turning the city's traffic into stages for the brands who show up on them.",
+    "Premium billboards at Bangalore's busiest junctions — turning everyday traffic into a stage for your brand.",
   primaryCtaLabel: "Explore live inventory",
   primaryCtaHref: "/locations",
   secondaryCtaLabel: "Talk to our team",
