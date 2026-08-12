@@ -13,18 +13,18 @@ export function Hero({ hero }: { hero: HeroContent }) {
   const videoSrc = hero.mediaType === "video" && hero.mediaUrl ? hero.mediaUrl : DEFAULT_VIDEO_SRC;
 
   return (
-    <section className="relative flex min-h-[600px] flex-col overflow-hidden pt-28 pb-16 sm:min-h-[680px] lg:min-h-[780px] lg:pt-36 lg:pb-20">
-      <div aria-hidden className="absolute inset-0">
+    <section className="relative overflow-hidden bg-ink pt-16 lg:pt-[72px]">
+      {/* The footage is the point, so it plays full-bleed and completely
+          unobstructed in its own band — no text ever sits on top of it.
+          aspect-video matches the source's native 16:9, so nothing is
+          cropped and the billboard is visible exactly as shot. */}
+      <div aria-hidden className="relative aspect-video w-full overflow-hidden">
         {hasImage ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={hero.mediaUrl}
-            alt=""
-            className="h-full w-full object-cover object-[50%_38%] lg:object-[42%_center]"
-          />
+          <img src={hero.mediaUrl} alt="" className="h-full w-full object-cover" />
         ) : (
           <video
-            className="h-full w-full object-cover object-[50%_38%] lg:object-[42%_center]"
+            className="h-full w-full object-cover"
             src={videoSrc}
             autoPlay
             muted
@@ -32,31 +32,16 @@ export function Hero({ hero }: { hero: HeroContent }) {
             playsInline
           />
         )}
-        {/* Layered darkening tuned so headline text stays crisp no matter
-            what's directly behind it: a uniform base tint, a top-to-bottom
-            fade into the next section, and a vignette centered on the text
-            column so the footage reads clearly at the edges/corners without
-            fighting the copy for attention in the middle. */}
-        <div className="absolute inset-0 bg-ink/50" />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink" />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 75% 65% at 50% 46%, rgba(4,4,6,0.92) 0%, rgba(4,4,6,0.7) 40%, rgba(4,4,6,0.25) 72%, rgba(4,4,6,0) 100%)",
-          }}
-        />
-      </div>
-      <Noise />
+        <Noise />
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ink to-transparent" />
 
-      <Container className="relative flex flex-1 flex-col items-center justify-center">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex items-center justify-center"
+          className="absolute left-4 top-4 sm:left-6 sm:top-6"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-mist backdrop-blur-md">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-4 py-1.5 text-xs font-medium text-mist backdrop-blur-md">
             <span className="relative flex size-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-75" />
               <span className="relative inline-flex size-1.5 rounded-full bg-signal" />
@@ -64,12 +49,14 @@ export function Hero({ hero }: { hero: HeroContent }) {
             {hero.badge}
           </span>
         </motion.div>
+      </div>
 
+      <Container className="relative flex flex-col items-center py-10 sm:py-12 lg:py-16">
         <motion.h1
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto mt-8 max-w-4xl text-center font-display text-4xl font-medium leading-[1.05] tracking-tight text-mist drop-shadow-[0_2px_24px_rgba(0,0,0,0.5)] sm:text-5xl md:text-6xl lg:text-7xl"
+          transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto max-w-4xl text-center font-display text-3xl font-medium leading-[1.08] tracking-tight text-mist sm:text-4xl md:text-5xl lg:text-6xl"
         >
           {hero.headline}
           <br />
@@ -77,19 +64,19 @@ export function Hero({ hero }: { hero: HeroContent }) {
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto mt-6 max-w-xl text-center text-base leading-relaxed text-mist-dim sm:text-lg px-4"
+          transition={{ duration: 0.7, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto mt-4 max-w-lg text-center text-sm leading-relaxed text-mist-dim sm:text-base px-4"
         >
           {hero.subheadline}
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.34, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 flex flex-col items-center justify-center gap-3 px-4 sm:flex-row sm:gap-4"
+          transition={{ duration: 0.7, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-7 flex flex-col items-center justify-center gap-3 px-4 sm:flex-row sm:gap-4"
         >
           <Button href={hero.primaryCtaHref} size="lg" className="w-full sm:w-auto">
             {hero.primaryCtaLabel}
