@@ -23,6 +23,8 @@ export interface InventoryLocation {
   dailyImpressions?: number;
   landmark: string;
   gps?: string;
+  trafficFrom?: string;
+  trafficTowards?: string;
   availability: Availability;
   highlights: string[];
   hue: [string, string];

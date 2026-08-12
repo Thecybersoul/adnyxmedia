@@ -2,16 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Eye, Ratio } from "lucide-react";
+import { MapPin, Ratio } from "lucide-react";
 import { InventoryLocation } from "@/types/location";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-
-function formatImpressions(n: number) {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 1_000) return `${Math.round(n / 1000)}K`;
-  return `${n}`;
-}
 
 const availabilityTone = {
   Available: "success",
@@ -68,20 +62,11 @@ export function LocationCard({ location }: { location: InventoryLocation }) {
         <div className="absolute left-3 top-3">
           <Badge tone={availabilityTone[location.availability]}>{location.availability}</Badge>
         </div>
-        <div className="absolute right-3 top-3">
-          <Badge tone="muted">{location.type}</Badge>
-        </div>
-        <div className="absolute inset-x-4 bottom-3 flex items-center justify-between text-xs text-white/90">
+        <div className="absolute inset-x-4 bottom-3 flex items-center text-xs text-white/90">
           <span className="inline-flex items-center gap-1">
             <Ratio className="size-3.5" />
             {location.widthFt}×{location.heightFt} ft
           </span>
-          {location.dailyImpressions && (
-            <span className="inline-flex items-center gap-1">
-              <Eye className="size-3.5" />
-              {formatImpressions(location.dailyImpressions)}/day
-            </span>
-          )}
         </div>
       </div>
 

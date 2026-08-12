@@ -25,7 +25,6 @@ const emptyLocation: LocationInput = {
   heightFt: 10,
   resolution: "",
   illuminated: true,
-  dailyImpressions: 0,
   landmark: "",
   availability: "Available",
   highlights: [],
@@ -136,13 +135,23 @@ export function LocationForm({ existing }: { existing?: InventoryLocation }) {
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <NumberField label="Width (ft)" value={value.widthFt} onChange={(v) => set("widthFt", v)} />
           <NumberField label="Height (ft)" value={value.heightFt} onChange={(v) => set("heightFt", v)} />
-          <NumberField
-            label="Daily impressions (optional)"
-            value={value.dailyImpressions ?? 0}
-            onChange={(v) => set("dailyImpressions", v)}
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <Field
+            label="Traffic coming from (optional)"
+            value={value.trafficFrom ?? ""}
+            onChange={(v) => set("trafficFrom", v)}
+            placeholder="KR Market Bus Stop, NR Road & Metro Station"
+          />
+          <Field
+            label="Traffic going towards (optional)"
+            value={value.trafficTowards ?? ""}
+            onChange={(v) => set("trafficTowards", v)}
+            placeholder="SJP Road, Avenue Road, Chickpet & CBD Area"
           />
         </div>
 

@@ -21,6 +21,8 @@ export const locations: InventoryLocation[] = [
     illuminated: true,
     landmark: "Near KR Market Bus Stop & Metro Station",
     gps: "12°57'51.6\"N 77°34'40.2\"E",
+    trafficFrom: "KR Market Bus Stop, NR Road & Metro Station",
+    trafficTowards: "SJP Road, Avenue Road, Chickpet & CBD Area",
     availability: "Available",
     highlights: [
       "Traffic from KR Market Bus Stop, NR Road & Metro Station",
@@ -44,6 +46,8 @@ export const locations: InventoryLocation[] = [
     illuminated: true,
     landmark: "Mysore Road Flyover, near Krishna Rajendra Road",
     gps: "12°57'49.8\"N 77°34'39.0\"E",
+    trafficFrom: "Mysore Road Flyover & Krishna Rajendra Road",
+    trafficTowards: "City Townhall, CBD Area & Kalasipalyam Bus Station",
     availability: "Available",
     highlights: [
       "Traffic from Mysore Road Flyover & Krishna Rajendra Road",
@@ -66,6 +70,8 @@ export const locations: InventoryLocation[] = [
     illuminated: true,
     landmark: "Mysore Road Flyover, towards Gopalan Sirsi Mall",
     gps: "12°57'49.7\"N 77°34'39.2\"E",
+    trafficFrom: "CBD Area, City Townhall & Corporation Circle",
+    trafficTowards: "Mysore Road & Gopalan Sirsi Mall",
     availability: "Available",
     highlights: [
       "Traffic from CBD, City Townhall & Corporation Circle",
@@ -88,6 +94,8 @@ export const locations: InventoryLocation[] = [
     illuminated: true,
     landmark: "HSR Layout to Ragigudda Flyover",
     gps: "12°54'58.0\"N 77°36'56.1\"E",
+    trafficFrom: "HSR Layout, Silk Board & Electronic City",
+    trafficTowards: "Jayanagar & JP Nagar",
     availability: "Available",
     highlights: [
       "Traffic from HSR Layout, Silk Board & Electronic City",
@@ -110,6 +118,8 @@ export const locations: InventoryLocation[] = [
     illuminated: true,
     landmark: "Outer Ring Road, near Ecospace & Ecoworld",
     gps: "12°54'58.0\"N 77°36'56.1\"E",
+    trafficFrom: "Iblur, Sarjapur Road & HSR Layout",
+    trafficTowards: "Ecospace, Ecoworld & Marathahalli Outer Ring Road",
     availability: "Available",
     highlights: [
       "Traffic from Iblur, Sarjapur Road & HSR Layout",

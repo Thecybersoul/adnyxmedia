@@ -3,9 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   ArrowLeft,
+  ArrowRight,
   MapPin,
+  Navigation,
   Ratio,
-  Eye,
   Radio,
   Signpost,
 } from "lucide-react";
@@ -96,6 +97,38 @@ export default async function LocationDetailPage({
                 />
               </Reveal>
 
+              {(location.trafficFrom || location.trafficTowards) && (
+                <Reveal delay={0.13}>
+                  <div className="mt-8">
+                    <h2 className="font-display text-lg font-medium text-mist">Traffic direction</h2>
+                    <div className="mt-4 space-y-3">
+                      {location.trafficFrom && (
+                        <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface/60 px-4 py-3">
+                          <Navigation className="mt-0.5 size-4 shrink-0 text-brand-bright" />
+                          <div>
+                            <p className="text-xs font-medium uppercase tracking-wide text-mist-faint">
+                              Coming from
+                            </p>
+                            <p className="mt-0.5 text-sm text-mist-dim">{location.trafficFrom}</p>
+                          </div>
+                        </div>
+                      )}
+                      {location.trafficTowards && (
+                        <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface/60 px-4 py-3">
+                          <ArrowRight className="mt-0.5 size-4 shrink-0 text-brand-bright" />
+                          <div>
+                            <p className="text-xs font-medium uppercase tracking-wide text-mist-faint">
+                              Going towards
+                            </p>
+                            <p className="mt-0.5 text-sm text-mist-dim">{location.trafficTowards}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </Reveal>
+              )}
+
               <Reveal delay={0.16}>
                 <div className="mt-8">
                   <h2 className="font-display text-lg font-medium text-mist">Site highlights</h2>
@@ -122,9 +155,6 @@ export default async function LocationDetailPage({
                     <Spec icon={Radio} label="Resolution" value={location.resolution} />
                   )}
                   <Spec icon={Signpost} label="Format" value={location.format} />
-                  {location.dailyImpressions && (
-                    <Spec icon={Eye} label="Daily impressions" value={`~${formatImpressions(location.dailyImpressions)}`} />
-                  )}
                   {location.gps && <Spec icon={MapPin} label="GPS" value={location.gps} />}
                 </dl>
 
@@ -180,7 +210,3 @@ function Spec({
   );
 }
 
-function formatImpressions(n: number) {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M/day`;
-  return `${Math.round(n / 1000)}K/day`;
-}
