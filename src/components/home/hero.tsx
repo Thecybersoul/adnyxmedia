@@ -22,10 +22,6 @@ function Badge({ label }: { label: string }) {
 }
 
 export function Hero({ hero }: { hero: HeroContent }) {
-  const hasImage = hero.mediaType === "image" && !!hero.mediaUrl;
-  const videoSrc = hero.mediaType === "video" && hero.mediaUrl ? hero.mediaUrl : DEFAULT_VIDEO_SRC;
-  const mobileVideoSrc = hero.mediaType === "video" && hero.mediaUrl ? hero.mediaUrl : DEFAULT_MOBILE_VIDEO_SRC;
-
   return (
     <>
       {/* Mobile: the existing 4:5 crop, with the bottom faded so the
@@ -37,19 +33,14 @@ export function Hero({ hero }: { hero: HeroContent }) {
           of it at every point in the loop. */}
       <section className="relative overflow-hidden bg-ink lg:hidden">
         <div aria-hidden className="relative aspect-[4/5] w-full overflow-hidden">
-          {hasImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={hero.mediaUrl} alt="" className="h-full w-full object-cover" />
-          ) : (
-            <video
-              className="h-full w-full object-cover"
-              src={mobileVideoSrc}
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-          )}
+          <video
+            className="h-full w-full object-cover"
+            src={DEFAULT_MOBILE_VIDEO_SRC}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
           <Noise />
           <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-ink from-15% via-ink/75 via-55% to-transparent" />
 
@@ -100,19 +91,14 @@ export function Hero({ hero }: { hero: HeroContent }) {
           in that band, seamlessly on the footage. */}
       <section className="relative hidden overflow-hidden bg-ink lg:block">
         <div aria-hidden className="relative aspect-video w-full overflow-hidden">
-          {hasImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={hero.mediaUrl} alt="" className="h-full w-full object-cover" />
-          ) : (
-            <video
-              className="h-full w-full object-cover"
-              src={videoSrc}
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-          )}
+          <video
+            className="h-full w-full object-cover"
+            src={DEFAULT_VIDEO_SRC}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
           <Noise />
           <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-ink from-10% via-ink/65 via-50% to-transparent" />
 

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Field, TextAreaField } from "@/components/admin/field";
 import { SaveBar } from "@/components/admin/save-bar";
-import { MediaPicker } from "@/components/admin/media-picker";
 import { saveContentSection } from "@/app/admin/(dashboard)/content/actions";
 import type { HeroContent } from "@/types/content";
 
@@ -69,21 +68,6 @@ export function HeroEditor({ initial }: { initial: HeroContent }) {
             label="Secondary button link"
             value={value.secondaryCtaHref}
             onChange={(v) => set("secondaryCtaHref", v)}
-          />
-        </div>
-        <Field label="Media caption" value={value.mediaCaption} onChange={(v) => set("mediaCaption", v)} />
-
-        <div>
-          <span className="mb-2 block text-sm font-medium text-mist-dim">
-            Hero media (optional — replaces the animated placeholder)
-          </span>
-          <MediaPicker
-            url={value.mediaUrl}
-            kind={value.mediaType}
-            onChange={({ url, kind }) => {
-              set("mediaUrl", url);
-              set("mediaType", kind);
-            }}
           />
         </div>
       </div>
