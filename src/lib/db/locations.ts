@@ -55,8 +55,14 @@ export async function getLocations(): Promise<InventoryLocation[]> {
     const rows = (await sql!`
       SELECT * FROM locations ORDER BY sort_order ASC, created_at ASC
     `) as unknown as LocationRow[];
-    if (rows.length === 0) return staticLocations;
-    return rows.map(rowToLocation);
+    const dbLocations = rows.map(rowToLocation);
+    // A fallback entry only "materializes" into the database once someone
+    // edits and saves it (updateLocation upserts by id). Returning DB rows
+    // alone here would make every not-yet-edited fallback location vanish
+    // from view the moment even one row exists — merge instead.
+    const dbIds = new Set(dbLocations.map((loc) => loc.id));
+    const unmaterialized = staticLocations.filter((loc) => !dbIds.has(loc.id));
+    return [...dbLocations, ...unmaterialized];
   } catch (err) {
     console.error("Failed to load locations, using fallback.", err);
     markDbFailure();
@@ -65,18 +71,19 @@ export async function getLocations(): Promise<InventoryLocation[]> {
 }
 
 export async function getLocationBySlug(slug: string): Promise<InventoryLocation | undefined> {
-  if (!(await isDbAvailable())) return staticLocations.find((loc) => loc.slug === slug);
+  const fallback = staticLocations.find((loc) => loc.slug === slug);
+  if (!(await isDbAvailable())) return fallback;
 
   try {
     const rows = (await sql!`
       SELECT * FROM locations WHERE slug = ${slug} LIMIT 1
     `) as unknown as LocationRow[];
-    if (rows.length === 0) return undefined;
+    if (rows.length === 0) return fallback;
     return rowToLocation(rows[0]);
   } catch (err) {
     console.error(`Failed to load location "${slug}", using fallback.`, err);
     markDbFailure();
-    return staticLocations.find((loc) => loc.slug === slug);
+    return fallback;
   }
 }
 
