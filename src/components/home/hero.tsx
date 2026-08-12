@@ -109,17 +109,20 @@ export function Hero({ hero }: { hero: HeroContent }) {
         </div>
       </section>
 
-      {/* Desktop: same pattern — video flush under the nav at its native
-          16:9, leftover height becomes a solid dark panel with the
-          headline/CTAs pinned to the bottom of the screen. */}
+      {/* Desktop: video is a fixed 65% of the screen height (not sized
+          off its native aspect ratio) — on wide monitors, aspect-video at
+          full width was taller than the whole viewport, so it got capped
+          hard by the leftover-space calc and cropped the billboard clean
+          out of frame. A fixed vh split is predictable regardless of how
+          wide the screen is. Content fills the remaining ~35%. */}
       <section className="relative hidden overflow-hidden bg-ink lg:flex lg:min-h-[100svh] lg:flex-col lg:pt-[72px]">
         <div
           aria-hidden
           className="relative w-full shrink-0 overflow-hidden"
-          style={{ height: "min(56.25vw, calc(100svh - 72px - 280px))" }}
+          style={{ height: "65svh" }}
         >
           <video
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover object-[50%_25%]"
             src={DEFAULT_VIDEO_SRC}
             autoPlay
             muted
@@ -139,12 +142,12 @@ export function Hero({ hero }: { hero: HeroContent }) {
           </motion.div>
         </div>
 
-        <Container className="relative flex flex-1 flex-col items-center justify-end pb-10">
+        <Container className="relative flex flex-1 flex-col items-center justify-end pb-6">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto max-w-3xl text-center font-display text-5xl font-medium leading-[1.05] tracking-tight text-mist xl:text-6xl"
+            className="mx-auto max-w-3xl text-center font-display text-4xl font-medium leading-[1.05] tracking-tight text-mist"
           >
             {hero.headline}
             <br />
@@ -155,7 +158,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-            className="mx-auto mt-4 max-w-md text-center text-base leading-relaxed text-mist-dim"
+            className="mx-auto mt-2 max-w-md text-center text-sm leading-relaxed text-mist-dim"
           >
             {hero.subheadline}
           </motion.p>
@@ -164,7 +167,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 flex items-center justify-center gap-3"
+            className="mt-4 flex items-center justify-center gap-3"
           >
             <Button href={hero.primaryCtaHref} size="md">
               {hero.primaryCtaLabel}
