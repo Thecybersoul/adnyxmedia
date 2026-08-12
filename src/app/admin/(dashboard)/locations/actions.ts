@@ -5,6 +5,7 @@ import {
   createLocation,
   updateLocation,
   deleteLocation,
+  resetToCanonicalLocations,
   type LocationInput,
 } from "@/lib/db/locations";
 import type { InventoryLocation } from "@/types/location";
@@ -25,6 +26,12 @@ export async function updateLocationAction(id: string, input: LocationInput): Pr
 
 export async function deleteLocationAction(id: string): Promise<void> {
   await deleteLocation(id);
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/locations");
+}
+
+export async function resetLocationsAction(): Promise<void> {
+  await resetToCanonicalLocations();
   revalidatePath("/", "layout");
   revalidatePath("/admin/locations");
 }

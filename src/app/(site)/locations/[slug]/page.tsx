@@ -6,7 +6,6 @@ import {
   MapPin,
   Ratio,
   Eye,
-  Sun,
   Radio,
   Signpost,
 } from "lucide-react";
@@ -126,7 +125,6 @@ export default async function LocationDetailPage({
                   {location.dailyImpressions && (
                     <Spec icon={Eye} label="Daily impressions" value={`~${formatImpressions(location.dailyImpressions)}`} />
                   )}
-                  <Spec icon={Sun} label="Illumination" value={location.illuminated ? "Illuminated, 24×7" : "Non-illuminated"} />
                   {location.gps && <Spec icon={MapPin} label="GPS" value={location.gps} />}
                 </dl>
 

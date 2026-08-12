@@ -5,6 +5,8 @@ import { InventoryLocation } from "@/types/location";
  * Daily-impressions figures aren't in the LOM, so that stat is left unset
  * rather than estimated — the UI hides it when absent.
  */
+const SHARED_IMAGE = "/images/locations/kr-market-junction.jpg";
+
 export const locations: InventoryLocation[] = [
   {
     id: "loc-01",
@@ -12,11 +14,11 @@ export const locations: InventoryLocation[] = [
     name: "KR Market Junction",
     area: "KR Market / City Market",
     zone: "Central",
-    type: "Static Hoarding",
-    format: "Hoarding",
+    type: "Digital Billboard",
+    format: "LED Digital Screen",
     widthFt: 30,
     heightFt: 20,
-    illuminated: false,
+    illuminated: true,
     landmark: "Near KR Market Bus Stop & Metro Station",
     gps: "12°57'51.6\"N 77°34'40.2\"E",
     availability: "Available",
@@ -27,7 +29,7 @@ export const locations: InventoryLocation[] = [
     ],
     hue: ["#C13C3C", "#8B2828"],
     position: { x: 36, y: 50 },
-    hasNightImage: true,
+    imageUrl: SHARED_IMAGE,
   },
   {
     id: "loc-02",
@@ -35,8 +37,8 @@ export const locations: InventoryLocation[] = [
     name: "Mysore Road Flyover — KR Road",
     area: "Mysore Road",
     zone: "West",
-    type: "Static Hoarding",
-    format: "Backlit Hoarding",
+    type: "Digital Billboard",
+    format: "LED Digital Screen",
     widthFt: 22,
     heightFt: 22,
     illuminated: true,
@@ -46,11 +48,10 @@ export const locations: InventoryLocation[] = [
     highlights: [
       "Traffic from Mysore Road Flyover & Krishna Rajendra Road",
       "Sightline to City Townhall, CBD & Kalasipalyam Bus Station",
-      "Illuminated, 24×7 visibility",
     ],
     hue: ["#E65050", "#C13C3C"],
     position: { x: 31, y: 46 },
-    hasNightImage: true,
+    imageUrl: SHARED_IMAGE,
   },
   {
     id: "loc-03",
@@ -58,8 +59,8 @@ export const locations: InventoryLocation[] = [
     name: "Mysore Road Flyover — CBD Approach",
     area: "Mysore Road",
     zone: "West",
-    type: "Static Hoarding",
-    format: "Backlit Hoarding",
+    type: "Digital Billboard",
+    format: "LED Digital Screen",
     widthFt: 22,
     heightFt: 22,
     illuminated: true,
@@ -69,20 +70,19 @@ export const locations: InventoryLocation[] = [
     highlights: [
       "Traffic from CBD, City Townhall & Corporation Circle",
       "Sightline to Mysore Road & Gopalan Sirsi Mall",
-      "Illuminated, 24×7 visibility",
     ],
     hue: ["#9E2F2F", "#6B1F1F"],
     position: { x: 35, y: 58 },
-    hasNightImage: true,
+    imageUrl: SHARED_IMAGE,
   },
   {
     id: "loc-04",
     slug: "hsr-ragigudda-flyover",
     name: "HSR–Ragigudda Flyover",
-    area: "HSR Layout",
+    area: "HSR Layout / BTM",
     zone: "South",
-    type: "Static Hoarding",
-    format: "Backlit Hoarding",
+    type: "Digital Billboard",
+    format: "LED Digital Screen",
     widthFt: 22,
     heightFt: 22,
     illuminated: true,
@@ -92,7 +92,6 @@ export const locations: InventoryLocation[] = [
     highlights: [
       "Traffic from HSR Layout, Silk Board & Electronic City",
       "Sightline to Jayanagar & JP Nagar",
-      "Illuminated, 24×7 visibility",
     ],
     hue: ["#C13C3C", "#E65050"],
     position: { x: 63, y: 68 },
@@ -119,7 +118,7 @@ export const locations: InventoryLocation[] = [
     ],
     hue: ["#8B2828", "#C13C3C"],
     position: { x: 71, y: 64 },
-    hasNightImage: true,
+    imageUrl: SHARED_IMAGE,
   },
 ];
 

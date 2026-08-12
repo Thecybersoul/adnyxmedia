@@ -227,3 +227,46 @@ export async function deleteLocation(id: string): Promise<void> {
     throw toWriteError(err, `Failed to delete location "${id}"`);
   }
 }
+
+// Wipes the table and re-inserts exactly the canonical 5-site inventory from
+// the LOM (src/lib/data/locations.ts) — the one supported way to guarantee
+// no stray/duplicate rows survive from earlier edits, since a prior
+// materialized DB row always wins over a corrected static default. BTM
+// (loc-04) keeps whatever image/video is already live for it rather than
+// being reset to the static fallback, since that's a deliberately-chosen
+// asset, not LOM data.
+export async function resetToCanonicalLocations(): Promise<void> {
+  if (!(await isDbAvailable())) throw new Error("Database not configured — set DATABASE_URL to enable editing.");
+
+  try {
+    const preserved = (await sql!`
+      SELECT image_url, video_url FROM locations WHERE id = 'loc-04'
+    `) as unknown as { image_url: string | null; video_url: string | null }[];
+    const btmImageUrl = preserved[0]?.image_url ?? null;
+    const btmVideoUrl = preserved[0]?.video_url ?? null;
+
+    await sql!`DELETE FROM locations`;
+
+    for (let i = 0; i < staticLocations.length; i++) {
+      const loc = staticLocations[i];
+      const imageUrl = loc.id === "loc-04" ? btmImageUrl : (loc.imageUrl ?? null);
+      const videoUrl = loc.id === "loc-04" ? btmVideoUrl : (loc.videoUrl ?? null);
+      await sql!`
+        INSERT INTO locations (
+          id, slug, name, area, zone, type, format, width_ft, height_ft,
+          resolution, illuminated, daily_impressions, landmark, availability,
+          highlights, hue, position, image_url, video_url, sort_order
+        ) VALUES (
+          ${loc.id}, ${loc.slug}, ${loc.name}, ${loc.area}, ${loc.zone}, ${loc.type}, ${loc.format},
+          ${loc.widthFt}, ${loc.heightFt}, ${loc.resolution ?? null}, ${loc.illuminated},
+          ${loc.dailyImpressions ?? 0}, ${loc.landmark}, ${loc.availability},
+          ${JSON.stringify(loc.highlights)}::jsonb, ${JSON.stringify(loc.hue)}::jsonb,
+          ${JSON.stringify(loc.position)}::jsonb, ${imageUrl}, ${videoUrl}, ${i}
+        )
+      `;
+    }
+  } catch (err) {
+    markDbFailure();
+    throw toWriteError(err, "Failed to reset locations to LOM defaults");
+  }
+}
